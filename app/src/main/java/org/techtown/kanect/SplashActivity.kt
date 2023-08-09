@@ -1,7 +1,7 @@
 package org.techtown.kanect
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import org.techtown.kanect.databinding.ActivitySplashBinding
@@ -18,7 +18,7 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed({
 
-            val intent = Intent(this@SplashActivity, MainActivity::class.java)
+            val intent = Intent(this@SplashActivity, LoginActivity::class.java)
             startActivity(intent)
             finish()
 
