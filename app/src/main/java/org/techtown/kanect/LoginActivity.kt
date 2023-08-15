@@ -25,14 +25,19 @@ class LoginActivity : AppCompatActivity() {
         //----------------------카카오 로그인 api 관련 코드---------------------------------
 
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+
             if (error != null) {
                 Toast.makeText(this, "카카오 로그인 실패", Toast.LENGTH_SHORT).show()
-            } else if (tokenInfo != null) {
-                Toast.makeText(this, "카카오 로그인", Toast.LENGTH_SHORT).show()
+            }
+            else if (tokenInfo != null) {
 
+                Toast.makeText(this, "카카오 로그인", Toast.LENGTH_SHORT).show()
                 moveNextActivity()
 
             }
+
+
+
         }
 
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
@@ -67,6 +72,8 @@ class LoginActivity : AppCompatActivity() {
                     else -> { // Unknown
                         Toast.makeText(this, "기타 에러", Toast.LENGTH_SHORT).show()
                     }
+
+
                 }
             } else if (token != null) {
 
@@ -98,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
 
         UserApiClient.instance.me { user, error ->
 
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, AuthActivity::class.java)
             startActivity(intent)
             finish()
 
