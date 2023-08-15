@@ -38,7 +38,7 @@
 
     <ImageButton
         android:id="@+id/kakaoLogin_But"
-        android:src="@drawable/kakao_login_but"
+        android:src="@drawable/kakao_login_large_narrow"
         android:background="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
