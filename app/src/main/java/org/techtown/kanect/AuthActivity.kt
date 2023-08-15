@@ -1,15 +1,13 @@
 package org.techtown.kanect
 
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
+
 import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.LayoutInflater
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.bumptech.glide.Glide.with
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
