@@ -6,10 +6,15 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.FirebaseDatabase
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import org.techtown.kanect.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -103,13 +108,42 @@ class LoginActivity : AppCompatActivity() {
 
     private fun moveNextActivity(){
 
+
         UserApiClient.instance.me { user, error ->
 
-            val intent = Intent(this, AuthActivity::class.java)
+            var intent : Intent?
+
+            if(checkId(user!!.id.toString())){
+                intent = Intent(this, MainActivity::class.java)
+            }
+            else
+                intent = Intent(this, AuthActivity::class.java)
+
+
             startActivity(intent)
+
 
         }
 
+    }
+
+    private suspend fun checkDataExistence(userId: String): Boolean = withContext(Dispatchers.IO) {
+
+        val database = FirebaseDatabase.getInstance()
+        val reference = database.reference.child("picAuths").child(userId)
+
+        return@withContext try {
+            val dataSnapshot = reference.get().await()
+            dataSnapshot.exists()
+        } catch (e: Exception) {
+            false
+        }
+
+    }
+
+    // 사용 예시
+    private fun checkId(userId : String) = runBlocking {
+        return@runBlocking checkDataExistence(userId)
     }
 
 

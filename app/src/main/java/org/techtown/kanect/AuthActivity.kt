@@ -24,8 +24,6 @@ class AuthActivity : AppCompatActivity() {
     private val REQUEST_IMAGE_CAPTURE = 1
     private var picComplete = false
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -131,9 +129,9 @@ class AuthActivity : AppCompatActivity() {
 
                         user?.id?.let { userId ->
 
-                            val picAuth = PicAuth(userId, imageUrl)
+                            val picAuth = PicAuth(userId.toString(), imageUrl)
                             val databaseRef = FirebaseDatabase.getInstance().reference
-                            val newPicAuthRef = databaseRef.child("picAuths").push()
+                            val newPicAuthRef = databaseRef.child("picAuths").child(userId.toString())
 
                             newPicAuthRef.setValue(picAuth)
                                 .addOnSuccessListener {
