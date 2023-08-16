@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_list"
+        android:icon="@drawable/ic_baseline_list"
+        android:title="리스트" />
+    <item
+        android:id="@+id/navigation_talk"
+        android:icon="@drawable/ic_baseline_talk"
+        android:title="대화창" />
+    <item
+        android:id="@+id/navigation_my"
+        android:icon="@drawable/ic_baseline_person"
+        android:title="내 정보" />
+
+</menu>

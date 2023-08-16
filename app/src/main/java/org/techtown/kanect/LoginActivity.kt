@@ -115,17 +115,21 @@ class LoginActivity : AppCompatActivity() {
 
             if(checkId(user!!.id.toString())){
                 intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
             }
-            else
+            else{
                 intent = Intent(this, AuthActivity::class.java)
-
-
-            startActivity(intent)
-
+                startActivity(intent)
+            }
 
         }
 
+        
+
     }
+
+    //코루틴을 사용하여 백그라운드 스레드에서 userId가 파이어베이스에 존재하는지 체크
 
     private suspend fun checkDataExistence(userId: String): Boolean = withContext(Dispatchers.IO) {
 
