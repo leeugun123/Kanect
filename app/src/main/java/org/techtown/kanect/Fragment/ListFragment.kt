@@ -32,7 +32,14 @@ class ListFragment : Fragment() {
 
 
         val cafeList = listOf(
-            CafeIntel("cafe1_img", "스타벅스(공릉점)", "전체 좌석 50", true, true, 23, true)
+
+            CafeIntel("https://firebasestorage.googleapis.com/v0/b/kanect-ced83.appspot.com/o/starbucks_logo.PNG?alt=media&token=d2a0d513-dacd-4862-8e7e-ec2decc5d91e", "스타벅스(공릉점)", "전체 좌석 50",
+                true, true, 23, true) ,
+            CafeIntel("https://firebasestorage.googleapis.com/v0/b/kanect-ced83.appspot.com/o/twosomeplace_logo.PNG?alt=media&token=89756cde-060f-47f5-a69b-227f80d534b7", "투썸플레이스(공릉점)", "전체 좌석 35",
+                false, true, 23, false),
+            CafeIntel("https://firebasestorage.googleapis.com/v0/b/kanect-ced83.appspot.com/o/tomtom_logo.PNG?alt=media&token=4b68af13-cd9c-4230-8a0d-5c8460437ee6", "탐탐(공릉점)", "전체 좌석 40",
+            false, true, 25, true)
+
         )
 
         cafeListRecyclerView.adapter = CafeListAdapter(cafeList)

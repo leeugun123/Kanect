@@ -43,20 +43,21 @@ class CafeListAdapter(private val cafeList : List<CafeIntel>) : RecyclerView.Ada
         val cafeList = cafeList[position]
 
         Glide.with(holder.itemView.context)
-            .load(R.drawable.cafecupimg)
-            .centerCrop()
+            .load(cafeList.cafeImg)
+            .fitCenter()
             .into(holder.binding.cafeImg)
 
         holder.binding.cafeName.text = cafeList.cafeName
         holder.binding.seatCount.text = cafeList.seat
 
         if(cafeList.allHours){
+
             Glide.with(holder.itemView.context)
                 .load(R.drawable.all_hour)
-                .centerCrop()
+                .override(200,80)
                 .into(holder.binding.allHourImg)
-
         }
+
 
         if(cafeList.opExist){
             holder.binding.operation.text = "영업중"
@@ -76,8 +77,19 @@ class CafeListAdapter(private val cafeList : List<CafeIntel>) : RecyclerView.Ada
 
             Glide.with(holder.itemView.context)
                 .load(R.drawable.ic_baseline_thumb_up_blue)
+                .override(100,100)
                 .centerCrop()
                 .into(holder.binding.mycafeBut)
+
+        }
+        else{
+
+            Glide.with(holder.itemView.context)
+                .load(R.drawable.ic_baseline_thumb_up_24)
+                .override(100,100)
+                .centerCrop()
+                .into(holder.binding.mycafeBut)
+
 
         }
 
