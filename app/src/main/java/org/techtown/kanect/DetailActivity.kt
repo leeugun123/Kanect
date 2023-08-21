@@ -23,6 +23,9 @@ class DetailActivity : AppCompatActivity() {
             .into(binding.cafeImg)
 
         binding.cafeName.text = cafeInfo.cafeName
+        binding.operTime.text = cafeInfo.operTime
+        binding.entireSeat.text = cafeInfo.seat.toString() + "여석"
+        binding.plugSeat.text = cafeInfo.plugSeat.toString() + "여석"
 
         binding.reviewBut.setOnClickListener{
 

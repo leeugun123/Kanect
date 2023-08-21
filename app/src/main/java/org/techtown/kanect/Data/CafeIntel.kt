@@ -8,10 +8,10 @@ data class CafeIntel(
 
     val cafeImg : String,
     //카페 로고 이미지
-    //내 카페 찜하기 확인
+
     val cafeName : String,
     //카페 이름
-    val seat : String,
+    val seat : Int,
     //카페 전체 좌석
     val allHours : Boolean,
     //24시간 유무
@@ -19,29 +19,38 @@ data class CafeIntel(
     //현재 영업 우무
     val cur_seat : Int,
     //현재 카페 좌석
-    val myCafe : Boolean
+    val myCafe : Boolean,
     //내 카페 확인 유무
+    val operTime : String,
+    //영업 시간
+    val plugSeat : Int
+    //플러그 좌석 수
 
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
 
         parcel.readString() ?: "",
         parcel.readString() ?: "",
-        parcel.readString() ?: "",
+        parcel.readInt(),
         parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte(),
         parcel.readInt(),
-        parcel.readByte() != 0.toByte()
+        parcel.readByte() != 0.toByte(),
+        parcel.readString() ?: "",
+        parcel.readInt()
+
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(cafeImg)
         parcel.writeString(cafeName)
-        parcel.writeString(seat)
+        parcel.writeInt(seat)
         parcel.writeByte(if (allHours) 1 else 0)
         parcel.writeByte(if (opExist) 1 else 0)
         parcel.writeInt(cur_seat)
         parcel.writeByte(if (myCafe) 1 else 0)
+        parcel.writeString(operTime)
+        parcel.writeInt(plugSeat)
     }
 
     override fun describeContents(): Int {

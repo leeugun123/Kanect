@@ -8,101 +8,226 @@
     android:orientation="vertical"
     tools:context=".DetailActivity">
 
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/cafeImg"
-            android:layout_width="300dp"
-            android:layout_height="200dp"
-            android:src="@drawable/cafecupimg"
-            android:layout_gravity="center_horizontal"
-            />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/reviewBut"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@color/white"
-            android:src="@drawable/baseline_border_color_24" />
-
-        <ImageButton
-            android:id="@+id/mycafeBut"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@color/white"
-            android:src="@drawable/ic_baseline_thumb_up_24"
-            />
-
-        <ImageButton
-            android:id="@+id/chatbut"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@color/white"
-            android:src="@drawable/baseline_chat_24"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/cafeName"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="스타벅스(공릉점)"
-            android:textSize="35sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/cafeImg"
+                    android:layout_width="300dp"
+                    android:layout_height="200dp"
+                    android:src="@drawable/cafecupimg"
+                    android:layout_gravity="center_horizontal"
+                    />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/reviewBut"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@color/white"
+                    android:src="@drawable/baseline_border_color_24" />
+
+                <ImageButton
+                    android:id="@+id/mycafeBut"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@color/white"
+                    android:src="@drawable/ic_baseline_thumb_up_24"
+                    />
+
+                <ImageButton
+                    android:id="@+id/chatbut"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@color/white"
+                    android:src="@drawable/baseline_chat_24"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/cafeName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="스타벅스(공릉점)"
+                    android:textSize="35sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="채팅 참여 인원 : "
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/curSeat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="15명"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="영업 시간 : "
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/operTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="전체 좌석 수 : "
+                        android:textColor="@color/black"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:id="@+id/entireSeat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="콘센트 좌석 수 : "
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/plugSeat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="채팅 참여 인원"
+                android:layout_height="match_parent"
+                android:text="리뷰"
+                android:textSize="40sp"
                 android:textColor="@color/black"
-                android:textSize="25sp"
                 />
 
-            <TextView
-                android:id="@+id/curSeat"
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="15명"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
+
                 />
+
 
         </LinearLayout>
 
-    </LinearLayout>
+
+
+
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
 
 
 

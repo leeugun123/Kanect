@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "366007207967",
+    "firebase_url": "https://kanect-ced83-default-rtdb.firebaseio.com",
+    "project_id": "kanect-ced83",
+    "storage_bucket": "kanect-ced83.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:366007207967:android:785d57d34efe1bbb86ad2a",
+        "android_client_info": {
+          "package_name": "org.techtown.kanect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "366007207967-0n7nj1ue5qc881qvko5j50t3u8h3r3i8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdVHTdpAmCOxzfc-LyzzM7KOUTRnQOdiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "366007207967-0n7nj1ue5qc881qvko5j50t3u8h3r3i8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

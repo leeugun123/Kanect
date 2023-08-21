@@ -54,7 +54,7 @@ class CafeListAdapter(private val cafeList : List<CafeIntel>) : RecyclerView.Ada
             .into(holder.binding.cafeImg)
 
         holder.binding.cafeName.text = cafeList.cafeName
-        holder.binding.seatCount.text = cafeList.seat
+        holder.binding.seatCount.text = cafeList.seat.toString()
 
         if(cafeList.allHours){
 

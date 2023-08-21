@@ -41,15 +41,35 @@
             android:textSize="20sp"
             />
 
-        <TextView
-            android:id="@+id/seatCount"
-            android:layout_marginTop="15dp"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="전체 좌석 50"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="전체 좌석"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:id="@+id/seatCount"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="50"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                />
+
+
+        </LinearLayout>
+
+
 
         <ImageView
             android:id="@+id/allHourImg"
