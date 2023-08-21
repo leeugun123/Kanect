@@ -1,5 +1,6 @@
 package org.techtown.kanect.Adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
 import org.techtown.kanect.Data.CafeIntel
+import org.techtown.kanect.DetailActivity
 import org.techtown.kanect.R
 import org.techtown.kanect.databinding.CafeListLayoutBinding
 
@@ -25,6 +27,10 @@ class CafeListAdapter(private val cafeList : List<CafeIntel>) : RecyclerView.Ada
             val position = adapterPosition
             val context = itemView.context
 
+            val intent = Intent(context,DetailActivity::class.java)
+
+            intent.putExtra("cafeIntel",cafeList[position])
+            context.startActivity(intent)
 
         }
 
@@ -56,6 +62,7 @@ class CafeListAdapter(private val cafeList : List<CafeIntel>) : RecyclerView.Ada
                 .load(R.drawable.all_hour)
                 .override(200,80)
                 .into(holder.binding.allHourImg)
+
         }
 
 

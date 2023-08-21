@@ -24,6 +24,7 @@ class AuthActivity : AppCompatActivity() {
     private val REQUEST_IMAGE_CAPTURE = 1
     private var picComplete = false
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -96,6 +97,7 @@ class AuthActivity : AppCompatActivity() {
 
             // Firebase Storage에 업로드
             uploadImageToFirebaseStorage(imageBitmap)
+
 
         }
 

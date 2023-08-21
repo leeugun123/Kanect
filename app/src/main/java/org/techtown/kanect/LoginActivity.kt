@@ -27,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         //----------------------카카오 로그인 api 관련 코드---------------------------------
 
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
