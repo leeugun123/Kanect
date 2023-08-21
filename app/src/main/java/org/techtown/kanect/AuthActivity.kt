@@ -50,6 +50,7 @@ class AuthActivity : AppCompatActivity() {
                     override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
 
 
+
                     }
 
                 })
