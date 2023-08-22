@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="20dp"
             android:text="공부하기 너무 좋은 환경임!! 최고 최고"
             android:textColor="@color/black"
             android:textSize="15sp" />
@@ -53,7 +53,7 @@
             android:text="23/03/20"
             android:textSize="15sp"
             android:textColor="@color/black"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="24dp"
             android:layout_marginBottom="5dp"
             />
 
