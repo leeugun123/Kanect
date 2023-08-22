@@ -1,5 +1,6 @@
 package org.techtown.kanect
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,6 +55,8 @@ class DetailActivity : AppCompatActivity() {
 
         binding.reviewBut.setOnClickListener{
 
+            val intent = Intent(this, ReviewRegisterActivity::class.java)
+            startActivity(intent)
 
         }
 
