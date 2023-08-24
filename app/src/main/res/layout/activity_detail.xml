@@ -17,7 +17,7 @@
         android:scrollbarThumbVertical="@color/gray"
         android:scrollbarTrackVertical="@color/white"
         android:scrollbars = "vertical"
-        android:scrollbarSize="20dp">
+        android:scrollbarSize="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"

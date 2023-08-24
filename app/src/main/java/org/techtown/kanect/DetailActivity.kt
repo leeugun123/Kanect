@@ -56,6 +56,7 @@ class DetailActivity : AppCompatActivity() {
         binding.reviewBut.setOnClickListener{
 
             val intent = Intent(this, ReviewRegisterActivity::class.java)
+            intent.putExtra("cafeName",cafeInfo.cafeName)
             startActivity(intent)
 
         }
