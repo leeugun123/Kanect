@@ -6,24 +6,24 @@ import java.io.Serializable
 
 data class CafeIntel(
 
-    val cafeImg : String,
+    val cafeImg : String = "",
     //카페 로고 이미지
 
-    val cafeName : String,
+    val cafeName : String = "",
     //카페 이름
-    val seat : Int,
+    val seat : Int = 0,
     //카페 전체 좌석
-    val allHours : Boolean,
+    val allHours : Boolean = false,
     //24시간 유무
-    val opExist : Boolean,
+    val opExist : Boolean = false,
     //현재 영업 우무
-    val cur_seat : Int,
+    val cur_seat : Int = 0,
     //현재 카페 좌석
-    val myCafe : Boolean,
+    val myCafe : Boolean = false,
     //내 카페 확인 유무
-    val operTime : String,
+    val operTime : String = "",
     //영업 시간
-    val plugSeat : Int
+    val plugSeat : Int = 0
     //플러그 좌석 수
 
 ) : Parcelable {
