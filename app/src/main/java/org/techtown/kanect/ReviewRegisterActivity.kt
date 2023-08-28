@@ -1,5 +1,7 @@
 package org.techtown.kanect
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -60,8 +62,10 @@ class ReviewRegisterActivity : AppCompatActivity() {
 
                 newUserRef.setValue(UserIntel(userImg.toString() , userName , binding.reviewEdit.text.toString(),getCurrentDate()))
                     .addOnSuccessListener {
+
                         Toast.makeText(this,"후기 작성 완료",Toast.LENGTH_SHORT).show()
                         finish()
+
                     }
                     .addOnFailureListener {
                         Toast.makeText(this,"후기 작성 실패. 네트워크 오류 ",Toast.LENGTH_SHORT).show()
@@ -83,6 +87,8 @@ class ReviewRegisterActivity : AppCompatActivity() {
         return dateFormat.format(currentDate)
 
     }
+
+
 
 
 
