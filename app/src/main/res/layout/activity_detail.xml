@@ -56,13 +56,6 @@
                     android:background="@color/white"
                     android:src="@drawable/baseline_border_color_24" />
 
-                <ImageButton
-                    android:id="@+id/mycafeBut"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:background="@color/white"
-                    android:src="@drawable/ic_baseline_thumb_up_24"
-                    />
 
                 <ImageButton
                     android:id="@+id/chatbut"

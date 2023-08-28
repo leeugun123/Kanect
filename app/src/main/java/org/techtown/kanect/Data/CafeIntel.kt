@@ -8,7 +8,6 @@ data class CafeIntel(
 
     val cafeImg : String = "",
     //카페 로고 이미지
-
     val cafeName : String = "",
     //카페 이름
     val seat : Int = 0,
@@ -19,8 +18,6 @@ data class CafeIntel(
     //현재 영업 우무
     val cur_seat : Int = 0,
     //현재 카페 좌석
-    val myCafe : Boolean = false,
-    //내 카페 확인 유무
     val operTime : String = "",
     //영업 시간
     val plugSeat : Int = 0
@@ -35,7 +32,6 @@ data class CafeIntel(
         parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte(),
         parcel.readInt(),
-        parcel.readByte() != 0.toByte(),
         parcel.readString() ?: "",
         parcel.readInt()
 
@@ -48,7 +44,6 @@ data class CafeIntel(
         parcel.writeByte(if (allHours) 1 else 0)
         parcel.writeByte(if (opExist) 1 else 0)
         parcel.writeInt(cur_seat)
-        parcel.writeByte(if (myCafe) 1 else 0)
         parcel.writeString(operTime)
         parcel.writeInt(plugSeat)
     }

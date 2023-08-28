@@ -80,28 +80,6 @@ class CafeListAdapter(private val cafeList : List<CafeIntel>) : RecyclerView.Ada
         else
             holder.binding.curSeat.text = "FREE"
 
-        if(cafeList.myCafe){
-
-            Glide.with(holder.itemView.context)
-                .load(R.drawable.ic_baseline_thumb_up_blue)
-                .override(100,100)
-                .centerCrop()
-                .into(holder.binding.mycafeBut)
-
-        }
-        else{
-
-            Glide.with(holder.itemView.context)
-                .load(R.drawable.ic_baseline_thumb_up_24)
-                .override(100,100)
-                .centerCrop()
-                .into(holder.binding.mycafeBut)
-
-
-        }
-
-
-
 
 
 

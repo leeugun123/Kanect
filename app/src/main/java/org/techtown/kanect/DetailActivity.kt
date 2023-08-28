@@ -61,15 +61,11 @@ class DetailActivity : AppCompatActivity() {
 
         }
 
-        binding.mycafeBut.setOnClickListener {
-
-
-        }
-
         binding.chatbut.setOnClickListener {
 
 
         }
+
 
 
     }
