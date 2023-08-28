@@ -1,13 +1,17 @@
 package org.techtown.kanect.Adapter
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
+import com.google.firebase.database.collection.LLRBNode
 import org.techtown.kanect.Data.CafeIntel
 import org.techtown.kanect.DetailActivity
 import org.techtown.kanect.R
@@ -44,6 +48,7 @@ class CafeListAdapter(private val cafeList : List<CafeIntel>) : RecyclerView.Ada
 
     }
 
+    @SuppressLint("ResourceType")
     override fun onBindViewHolder(holder: CafeListAdapter.ViewHolder, position: Int) {
 
         val cafeList = cafeList[position]
@@ -71,6 +76,7 @@ class CafeListAdapter(private val cafeList : List<CafeIntel>) : RecyclerView.Ada
         }
         else{
             holder.binding.operation.text = "영업 종료"
+            holder.binding.operation.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.red))
         }
 
 
