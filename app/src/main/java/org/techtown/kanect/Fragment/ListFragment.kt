@@ -19,6 +19,12 @@ class ListFragment : Fragment() {
 
     private lateinit var binding : FragmentListBinding
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding = FragmentListBinding.inflate(inflater,container,false)

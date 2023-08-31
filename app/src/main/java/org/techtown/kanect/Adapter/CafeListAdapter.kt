@@ -22,23 +22,23 @@ class CafeListAdapter(private val cafeList : List<CafeIntel>) : RecyclerView.Ada
     inner class ViewHolder(val binding : CafeListLayoutBinding) : RecyclerView.ViewHolder(binding.root),
         View.OnClickListener{
 
-            init {
-                itemView.setOnClickListener(this)
-            }
+                        init {
+                            itemView.setOnClickListener(this)
+                        }
 
-        override fun onClick(v: View?) {
+                    override fun onClick(v: View?) {
 
-            val position = adapterPosition
-            val context = itemView.context
+                        val position = adapterPosition
+                        val context = itemView.context
 
-            val intent = Intent(context,DetailActivity::class.java)
+                        val intent = Intent(context,DetailActivity::class.java)
 
-            intent.putExtra("cafeIntel",cafeList[position])
-            context.startActivity(intent)
+                        intent.putExtra("cafeIntel",cafeList[position])
+                        context.startActivity(intent)
+
+                    }
 
         }
-
-    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CafeListAdapter.ViewHolder {
