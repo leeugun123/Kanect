@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:text="스타벅스(공릉점)"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="23sp"
             />
 
         <LinearLayout
@@ -49,7 +49,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="참여 인원 : "
+                android:text="참여 인원 :"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 />
@@ -61,6 +61,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="50"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="명"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 />

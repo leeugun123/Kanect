@@ -50,7 +50,7 @@ class CafeTalkAdapter(private val cafeChatList : List<CafeChatInfo>) : RecyclerV
             .into(holder.binding.cafeImg)
 
         holder.binding.cafeName.text = cafeChatList.cafeName
-        holder.binding.seatCount.text = cafeChatList.seat.toString() + "명"
+        holder.binding.seatCount.text = cafeChatList.seat.toString()
 
 
         holder.binding.chatbut.setOnClickListener {

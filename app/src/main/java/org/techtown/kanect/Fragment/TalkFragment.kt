@@ -27,8 +27,7 @@ class TalkFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding = FragmentTalkBinding.inflate(inflater,container,false)
-
-
+        
         val cafeChatListRecyclerView : RecyclerView = binding.cafeChatListRecycler
         cafeChatListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
