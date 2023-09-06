@@ -40,7 +40,7 @@ class CafeTalkAdapter(private val cafeChatList : List<CafeChatInfo>) : RecyclerV
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: CafeTalkAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder : CafeTalkAdapter.ViewHolder, position: Int) {
 
         val cafeChatList = cafeChatList[position]
 

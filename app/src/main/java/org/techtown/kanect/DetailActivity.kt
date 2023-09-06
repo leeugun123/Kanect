@@ -63,6 +63,9 @@ class DetailActivity : AppCompatActivity() {
 
         binding.chatbut.setOnClickListener {
 
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra("cafeName",cafeInfo.cafeName)
+            startActivity(intent)
 
         }
 
