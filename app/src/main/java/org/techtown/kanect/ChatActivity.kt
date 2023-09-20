@@ -1,10 +1,13 @@
 package org.techtown.kanect
 
+import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Adapter
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -12,9 +15,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.kakao.sdk.user.UserApiClient
 import org.techtown.kanect.Adapter.ChatAdapter
 import org.techtown.kanect.Data.ChatMessage
 import org.techtown.kanect.databinding.ActivityChatBinding
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 class ChatActivity : AppCompatActivity() {
 
@@ -25,6 +31,11 @@ class ChatActivity : AppCompatActivity() {
     private val database = FirebaseDatabase.getInstance()
     private val chatRef = database.reference.child("chat")
 
+    private var userImg : String = ""
+    private var userName : String = ""
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,13 +48,24 @@ class ChatActivity : AppCompatActivity() {
         binding.chatRecyclerView.layoutManager = layoutManager
         binding.chatRecyclerView.adapter = chatAdapter
 
+        UserApiClient.instance.me { user, error ->
+
+            user?.let {
+                userImg = it.kakaoAccount?.profile?.profileImageUrl.toString()
+                userName = it.kakaoAccount?.profile?.nickname.toString()
+            }
+
+        }
+
+
+
         binding.sendButton.setOnClickListener {
 
             val messageText = binding.messageInputEditText.text.toString()
 
             if(messageText.isNotBlank()){
 
-                val message = ChatMessage("https://firebasestorage.googleapis.com/v0/b/kanect-ced83.appspot.com/o/twosomeplace_logo.PNG?alt=media&token=89756cde-060f-47f5-a69b-227f80d534b7" , "사용자이름" ,messageText , "오후 03:23")
+                val message = ChatMessage(userImg, userName , messageText , getCurrentTimeAsString())
                 chatRef.push().setValue(message)
                 binding.messageInputEditText.text.clear()
 
@@ -80,9 +102,18 @@ class ChatActivity : AppCompatActivity() {
         })
 
 
+    }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getCurrentTimeAsString(): String {
 
-
+        val currentTime = LocalTime.now()
+        val formatter = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            DateTimeFormatter.ofPattern("a hh:mm")
+        } else {
+            TODO("VERSION.SDK_INT < O")
+        }
+        return currentTime.format(formatter)
 
 
     }
