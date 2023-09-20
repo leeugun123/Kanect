@@ -29,7 +29,6 @@ class ChatActivity : AppCompatActivity() {
     private val messages: MutableList<ChatMessage> = mutableListOf()
     // Firebase Realtime Database
     private val database = FirebaseDatabase.getInstance()
-    private val chatRef = database.reference.child("chat")
 
     private var userImg : String = ""
     private var userName : String = ""
@@ -42,8 +41,8 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //RecyclerView 초기화
-
+        val cafeName : String = intent.getStringExtra("cafeName").toString()
+        val chatRef = database.reference.child("chat").child(cafeName)
 
         UserApiClient.instance.me { user, error ->
 
@@ -52,12 +51,41 @@ class ChatActivity : AppCompatActivity() {
                 userId = it.id!!
                 userImg = it.kakaoAccount?.profile?.profileImageUrl.toString()
                 userName = it.kakaoAccount?.profile?.nickname.toString()
-
+                //카카오 api에서 정보 가져오기
 
                 chatAdapter = ChatAdapter(messages,userId)
                 val layoutManager = LinearLayoutManager(this)
                 binding.chatRecyclerView.layoutManager = layoutManager
                 binding.chatRecyclerView.adapter = chatAdapter
+                //Adapter 및 RecyclerView 연결
+
+                chatRef.addValueEventListener(object : ValueEventListener {
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+
+                        messages.clear()
+
+                        for (childSnapshot in snapshot.children) {
+
+                            val chatMessage = childSnapshot.getValue(ChatMessage::class.java)
+
+                            chatMessage?.let {
+                                messages.add(it)
+                            }
+
+                        }
+
+                        chatAdapter.notifyDataSetChanged()
+                        binding.chatRecyclerView.scrollToPosition(messages.size - 1)
+
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        // 처리되지 않은 오류를 처리
+                    }
+
+                })
+                //채팅 목록 가져오기
 
             }
 
@@ -80,32 +108,7 @@ class ChatActivity : AppCompatActivity() {
         }//전송 버튼
 
         // Firebase Realtime Database에서 채팅 메시지 가져오기
-        chatRef.addValueEventListener(object : ValueEventListener {
 
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-                messages.clear()
-
-                for (childSnapshot in snapshot.children) {
-
-                    val chatMessage = childSnapshot.getValue(ChatMessage::class.java)
-
-                    chatMessage?.let {
-                        messages.add(it)
-                    }
-
-                }
-
-                chatAdapter.notifyDataSetChanged()
-                binding.chatRecyclerView.scrollToPosition(messages.size - 1)
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                // 처리되지 않은 오류를 처리
-            }
-
-        })
 
 
     }
