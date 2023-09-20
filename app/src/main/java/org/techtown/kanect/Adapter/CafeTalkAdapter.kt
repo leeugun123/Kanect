@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import org.techtown.kanect.ChatActivity
 import org.techtown.kanect.Data.CafeChatInfo
 import org.techtown.kanect.DetailActivity
 import org.techtown.kanect.databinding.CafechatListLayoutBinding
@@ -26,6 +28,8 @@ class CafeTalkAdapter(private val cafeChatList : List<CafeChatInfo>) : RecyclerV
 
                             val position = adapterPosition
                             val context = itemView.context
+
+
 
 
                         }
@@ -55,7 +59,10 @@ class CafeTalkAdapter(private val cafeChatList : List<CafeChatInfo>) : RecyclerV
 
         holder.binding.chatbut.setOnClickListener {
 
-            Log.e("TAG","채팅화면 이동")
+            val intent = Intent(holder.itemView.context, ChatActivity::class.java)
+            intent.putExtra("cafeName", cafeChatList.cafeName)
+            holder.itemView.context.startActivity(intent)
+
 
         }//버튼 누를 시 이동
 

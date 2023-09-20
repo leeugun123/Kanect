@@ -26,6 +26,8 @@ class CafeListAdapter(private val cafeList : List<CafeIntel>) : RecyclerView.Ada
                             itemView.setOnClickListener(this)
                         }
 
+
+
                     override fun onClick(v: View?) {
 
                         val position = adapterPosition
