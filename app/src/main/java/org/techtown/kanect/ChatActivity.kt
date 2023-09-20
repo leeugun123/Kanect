@@ -33,7 +33,7 @@ class ChatActivity : AppCompatActivity() {
 
     private var userImg : String = ""
     private var userName : String = ""
-
+    private var userId : Long = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,16 +43,22 @@ class ChatActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //RecyclerView 초기화
-        chatAdapter = ChatAdapter(messages)
-        val layoutManager = LinearLayoutManager(this)
-        binding.chatRecyclerView.layoutManager = layoutManager
-        binding.chatRecyclerView.adapter = chatAdapter
+
 
         UserApiClient.instance.me { user, error ->
 
             user?.let {
+
+                userId = it.id!!
                 userImg = it.kakaoAccount?.profile?.profileImageUrl.toString()
                 userName = it.kakaoAccount?.profile?.nickname.toString()
+
+
+                chatAdapter = ChatAdapter(messages,userId)
+                val layoutManager = LinearLayoutManager(this)
+                binding.chatRecyclerView.layoutManager = layoutManager
+                binding.chatRecyclerView.adapter = chatAdapter
+
             }
 
         }
@@ -65,13 +71,13 @@ class ChatActivity : AppCompatActivity() {
 
             if(messageText.isNotBlank()){
 
-                val message = ChatMessage(userImg, userName , messageText , getCurrentTimeAsString())
+                val message = ChatMessage(userId , userImg, userName , messageText , getCurrentTimeAsString())
                 chatRef.push().setValue(message)
                 binding.messageInputEditText.text.clear()
 
             }
 
-        }
+        }//전송 버튼
 
         // Firebase Realtime Database에서 채팅 메시지 가져오기
         chatRef.addValueEventListener(object : ValueEventListener {
