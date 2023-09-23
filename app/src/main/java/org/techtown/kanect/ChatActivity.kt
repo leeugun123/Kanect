@@ -1,9 +1,11 @@
 package org.techtown.kanect
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Adapter
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -14,6 +16,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.MutableData
+import com.google.firebase.database.Transaction
 import com.google.firebase.database.ValueEventListener
 import com.kakao.sdk.user.UserApiClient
 import org.techtown.kanect.Adapter.ChatAdapter
@@ -34,6 +38,9 @@ class ChatActivity : AppCompatActivity() {
     private var userName : String = ""
     private var userId : Long = 0
 
+    private lateinit var chatRef : DatabaseReference
+    private lateinit var chatNumRef : DatabaseReference
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +49,12 @@ class ChatActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val cafeName : String = intent.getStringExtra("cafeName").toString()
-        val chatRef = database.reference.child("chat").child(cafeName)
-
-
+        chatRef = database.reference.child("chat").child(cafeName)
         Toast.makeText(this, cafeName + "에 입장하였습니다.",Toast.LENGTH_SHORT).show()
+
+        //카페 입장 수 조회
+        chatNumRef = database.reference.child("chatNum").child(cafeName).child("entryCount")
+        uploadCafeCount(true) // 입장
 
 
         UserApiClient.instance.me { user, error ->
@@ -111,7 +120,75 @@ class ChatActivity : AppCompatActivity() {
 
         }//전송 버튼
 
-        // Firebase Realtime Database에서 채팅 메시지 가져오기
+       binding.outButton.setOnClickListener {
+
+           val alertDialogBuilder = AlertDialog.Builder(this)
+
+
+           alertDialogBuilder.setTitle("채팅방 퇴장")
+           alertDialogBuilder.setMessage(cafeName + " 채팅방을 퇴장하시겠습니까?")
+
+           // "예" 버튼 설정 및 클릭 리스너 추가
+           alertDialogBuilder.setPositiveButton("예") { dialog, which ->
+
+               uploadCafeCount(false)
+               finish()
+
+           }
+
+           alertDialogBuilder.setNegativeButton("아니요") { dialog, which ->
+
+           }
+
+
+           val alertDialog = alertDialogBuilder.create()
+           alertDialog.show()
+
+
+       }//퇴장 버튼
+
+
+    }
+
+    private fun uploadCafeCount(entry : Boolean){
+        // 카페 입장 시 인원 추가
+        chatNumRef.runTransaction(object : Transaction.Handler {
+
+            override fun doTransaction(mutableData : MutableData): Transaction.Result {
+
+                var currentCount = mutableData.getValue(Int::class.java) ?: 0
+
+                if(entry)
+                    currentCount++
+                else{
+                    if(currentCount != 0)
+                        currentCount--;
+                }
+
+                mutableData.value = currentCount
+
+                return Transaction.success(mutableData)
+
+            }
+
+            override fun onComplete(databaseError: DatabaseError?, committed: Boolean, dataSnapshot: DataSnapshot?) {
+
+                if (databaseError == null) {
+
+                    if (committed) {
+                        Log.e("Firebase", "입장 인원 업데이트 성공")
+                    }
+                    else {
+                        Log.e("Firebase", "입장 인원 업데이트 실패")
+                    }
+
+                } else {
+                    Log.e("Firebase", "입장 인원 업데이트 오류: ${databaseError.message}")
+                }
+
+            }
+
+        })
 
 
 
