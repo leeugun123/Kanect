@@ -1,6 +1,7 @@
 package org.techtown.kanect
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -63,15 +64,37 @@ class DetailActivity : AppCompatActivity() {
 
         binding.chatbut.setOnClickListener {
 
-            val intent = Intent(this, ChatActivity::class.java)
-            intent.putExtra("cafeName",cafeInfo.cafeName)
-            startActivity(intent)
+            val alertDialogBuilder = AlertDialog.Builder(this)
+
+
+            alertDialogBuilder.setTitle("채팅방 입장")
+            alertDialogBuilder.setMessage(cafeInfo.cafeName + " 채팅방에 입장하시겠습니까?")
+
+            // "예" 버튼 설정 및 클릭 리스너 추가
+            alertDialogBuilder.setPositiveButton("예") { dialog, which ->
+
+                val intent = Intent(this, ChatActivity::class.java)
+                intent.putExtra("cafeName",cafeInfo.cafeName)
+                startActivity(intent)
+
+            }
+
+            // "아니요" 버튼 설정 및 클릭 리스너 추가
+            alertDialogBuilder.setNegativeButton("아니요") { dialog, which ->
+
+            }
+
+            // AlertDialog 생성 및 표시
+            val alertDialog = alertDialogBuilder.create()
+            alertDialog.show()
 
         }
 
 
 
     }
+
+
 
 
 }

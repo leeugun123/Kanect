@@ -44,6 +44,10 @@ class ChatActivity : AppCompatActivity() {
         val cafeName : String = intent.getStringExtra("cafeName").toString()
         val chatRef = database.reference.child("chat").child(cafeName)
 
+
+        Toast.makeText(this, cafeName + "에 입장하였습니다.",Toast.LENGTH_SHORT).show()
+
+
         UserApiClient.instance.me { user, error ->
 
             user?.let {

@@ -50,8 +50,6 @@ class AuthActivity : AppCompatActivity() {
 
                     override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
 
-
-
                     }
 
                 })
@@ -66,7 +64,6 @@ class AuthActivity : AppCompatActivity() {
         binding.authBut.setOnClickListener {
 
             if(picComplete){
-
                 Toast.makeText(this,"인증이 완료되었습니다.",Toast.LENGTH_SHORT).show()
                 moveNextActivity()
 

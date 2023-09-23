@@ -25,6 +25,8 @@ class ChatAdapter(private val messages : List<ChatMessage> , private val myId : 
             val userName = binding.chatUserName
             val timeStamp = binding.chatUserTimeStamp
 
+
+
             }
 
 
@@ -43,6 +45,8 @@ class ChatAdapter(private val messages : List<ChatMessage> , private val myId : 
             MessageViewHolderOther(otherBinding)
 
         }
+
+
 
     }
 

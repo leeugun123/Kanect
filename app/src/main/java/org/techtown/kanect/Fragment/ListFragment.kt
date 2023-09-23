@@ -21,7 +21,6 @@ class ListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
 
@@ -31,7 +30,6 @@ class ListFragment : Fragment() {
 
         val cafeListRecyclerView : RecyclerView = binding.cafeListRecycler
         cafeListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-
 
         val cafeList = listOf(
 
@@ -51,13 +49,11 @@ class ListFragment : Fragment() {
             true, opExist(0,2400), cur_seat = 25, operTime = "00:00 ~ 24:00", plugSeat = 30
             )
 
-
          )
 
         cafeListRecyclerView.adapter = CafeListAdapter(cafeList)
 
         return binding.root
-
 
     }
 
