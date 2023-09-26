@@ -6,7 +6,7 @@ data class CafeChatInfo(
 
     val cafeName : String = "",
 
-    val seat : Int = 0
+    var seat : Int = 0
 
 
 

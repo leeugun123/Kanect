@@ -2,25 +2,25 @@ package org.techtown.kanect.Data
 
 import android.os.Parcel
 import android.os.Parcelable
-import java.io.Serializable
+import kotlinx.coroutines.Job
 
 data class CafeIntel(
 
-    val cafeImg : String = "",
+    var cafeImg: String = "",
     //카페 로고 이미지
-    val cafeName : String = "",
+    var cafeName: String = "",
     //카페 이름
-    val seat : Int = 0,
+    var seat: Int = 0,
     //카페 전체 좌석
-    val allHours : Boolean = false,
+    var allHours: Boolean = false,
     //24시간 유무
-    val opExist : Boolean = false,
+    var opExist: Boolean = false,
     //현재 영업 우무
-    val cur_seat : Int = 0,
+    var cur_seat: Int = 0,
     //현재 카페 좌석
-    val operTime : String = "",
+    var operTime: String = "",
     //영업 시간
-    val plugSeat : Int = 0
+    var plugSeat: Int = 0
     //플러그 좌석 수
 
 ) : Parcelable {

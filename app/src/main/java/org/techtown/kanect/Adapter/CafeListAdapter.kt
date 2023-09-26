@@ -82,7 +82,7 @@ class CafeListAdapter(private val cafeList : List<CafeIntel>) : RecyclerView.Ada
         }
 
 
-        if(cafeList.cur_seat > 15){
+        if(cafeList.cur_seat / cafeList.seat >= 0.5){
             holder.binding.curSeat.text = "HOT"
         }
         else
