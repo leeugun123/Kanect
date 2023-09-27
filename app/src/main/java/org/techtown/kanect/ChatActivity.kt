@@ -37,6 +37,7 @@ class ChatActivity : AppCompatActivity() {
     private var userImg : String = ""
     private var userName : String = ""
     private var userId : Long = 0
+    private lateinit var cafeName : String
 
     private lateinit var chatRef : DatabaseReference
     private lateinit var chatNumRef : DatabaseReference
@@ -48,7 +49,7 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val cafeName : String = intent.getStringExtra("cafeName").toString()
+        cafeName = intent.getStringExtra("cafeName").toString()
         chatRef = database.reference.child("chat").child(cafeName)
         Toast.makeText(this, cafeName + "에 입장하였습니다.",Toast.LENGTH_SHORT).show()
 
@@ -121,30 +122,7 @@ class ChatActivity : AppCompatActivity() {
         }//전송 버튼
 
        binding.outButton.setOnClickListener {
-
-           val alertDialogBuilder = AlertDialog.Builder(this)
-
-
-           alertDialogBuilder.setTitle("채팅방 퇴장")
-           alertDialogBuilder.setMessage(cafeName + " 채팅방을 퇴장하시겠습니까?")
-
-           // "예" 버튼 설정 및 클릭 리스너 추가
-           alertDialogBuilder.setPositiveButton("예") { dialog, which ->
-
-               uploadCafeCount(false)
-               finish()
-
-           }
-
-           alertDialogBuilder.setNegativeButton("아니요") { dialog, which ->
-
-           }
-
-
-           val alertDialog = alertDialogBuilder.create()
-           alertDialog.show()
-
-
+           getOut()
        }//퇴장 버튼
 
 
@@ -206,6 +184,38 @@ class ChatActivity : AppCompatActivity() {
         return currentTime.format(formatter)
 
 
+    }
+
+    private fun getOut(){
+
+        val alertDialogBuilder = AlertDialog.Builder(this)
+
+
+        alertDialogBuilder.setTitle("채팅방 퇴장")
+        alertDialogBuilder.setMessage("$cafeName 채팅방을 퇴장하시겠습니까?")
+
+        // "예" 버튼 설정 및 클릭 리스너 추가
+        alertDialogBuilder.setPositiveButton("예") { dialog, which ->
+
+            uploadCafeCount(false)
+            finish()
+
+        }
+
+        alertDialogBuilder.setNegativeButton("아니요") { dialog, which ->
+
+        }
+
+
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+
+
+    }
+
+    override fun onBackPressed() {
+        getOut()
+        super.onBackPressed()
     }
 
 
