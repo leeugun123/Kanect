@@ -49,6 +49,7 @@ class TalkFragment : Fragment() {
         )
 
         val coroutineScope = CoroutineScope(Dispatchers.Main)
+        //UI 관련 동작 -> Main
 
         coroutineScope.launch {
 

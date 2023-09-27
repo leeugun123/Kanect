@@ -8,6 +8,4 @@ data class CafeChatInfo(
 
     var seat : Int = 0
 
-
-
 )

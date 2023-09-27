@@ -11,6 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.techtown.kanect.Data.UserIntel
 import org.techtown.kanect.Adapter.ReviewAdapter
 import org.techtown.kanect.Data.CafeIntel
@@ -32,6 +35,7 @@ class DetailActivity : AppCompatActivity() {
 
         val cafeInfo = intent.getParcelableExtra<CafeIntel>("cafeIntel")
 
+
         Glide.with(this)
             .load(cafeInfo!!.cafeImg)
             .fitCenter()
@@ -41,6 +45,8 @@ class DetailActivity : AppCompatActivity() {
         binding.operTime.text = cafeInfo.operTime
         binding.entireSeat.text = cafeInfo.seat.toString() + "여석"
         binding.plugSeat.text = cafeInfo.plugSeat.toString() + "여석"
+        binding.curSeat.text = cafeInfo.cur_seat.toString() + "명"
+
 
         userReviewRecyclerView = binding.userReviewRecyclerView
         userReviewRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -65,7 +71,6 @@ class DetailActivity : AppCompatActivity() {
         binding.chatbut.setOnClickListener {
 
             val alertDialogBuilder = AlertDialog.Builder(this)
-
 
             alertDialogBuilder.setTitle("채팅방 입장")
             alertDialogBuilder.setMessage(cafeInfo.cafeName + " 채팅방에 입장하시겠습니까?")
