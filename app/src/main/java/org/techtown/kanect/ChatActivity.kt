@@ -215,7 +215,6 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         getOut()
-        super.onBackPressed()
     }
 
 
