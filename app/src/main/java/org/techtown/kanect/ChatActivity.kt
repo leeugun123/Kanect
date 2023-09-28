@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -50,6 +51,16 @@ class ChatActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         cafeName = intent.getStringExtra("cafeName").toString()
+
+        Glide.with(this)
+            .load(intent.getStringExtra("cafeImg"))
+            .override(100,100)
+            .fitCenter()
+            .into(binding.cafeImg)
+
+
+        binding.cafeName.text = cafeName
+
         chatRef = database.reference.child("chat").child(cafeName)
         Toast.makeText(this, cafeName + "에 입장하였습니다.",Toast.LENGTH_SHORT).show()
 
@@ -121,9 +132,6 @@ class ChatActivity : AppCompatActivity() {
 
         }//전송 버튼
 
-       binding.outButton.setOnClickListener {
-           getOut()
-       }//퇴장 버튼
 
 
     }

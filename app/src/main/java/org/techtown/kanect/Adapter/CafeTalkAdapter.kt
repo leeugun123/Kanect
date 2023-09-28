@@ -69,6 +69,7 @@ class CafeTalkAdapter(private val cafeChatList : List<CafeChatInfo>) : RecyclerV
 
                 val intent = Intent(holder.itemView.context, ChatActivity::class.java)
                 intent.putExtra("cafeName", cafeChatList.cafeName)
+                intent.putExtra("cafeImg", cafeChatList.cafeImg)
                 holder.itemView.context.startActivity(intent)
 
             }

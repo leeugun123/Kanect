@@ -80,6 +80,7 @@ class DetailActivity : AppCompatActivity() {
 
                 val intent = Intent(this, ChatActivity::class.java)
                 intent.putExtra("cafeName",cafeInfo.cafeName)
+                intent.putExtra("cafeImg",cafeInfo.cafeImg)
                 startActivity(intent)
 
             }
