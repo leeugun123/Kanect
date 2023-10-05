@@ -2,10 +2,11 @@ package org.techtown.kanect.Data
 
 data class ChatMessage(
 
-    val userId : Long = 0,
-    val userImg : String = "",
-    val userName : String = "",
-    val text : String = "",
-    val timestamp : String = ""
-
+    var userId : Long = 0,
+    var userImg : String = "",
+    var userName : String = "",
+    var text : String = "",
+    var timestamp : String = "",//시간
+    var dayStamp : String = "",
+    var dayMessage : Boolean = true //day 메세지인지 확인
 )

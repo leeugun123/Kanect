@@ -1,18 +1,15 @@
 package org.techtown.kanect
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Message
 import android.util.Log
-import android.widget.Adapter
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -20,12 +17,16 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.MutableData
 import com.google.firebase.database.Transaction
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
 import com.kakao.sdk.user.UserApiClient
 import org.techtown.kanect.Adapter.ChatAdapter
 import org.techtown.kanect.Data.ChatMessage
 import org.techtown.kanect.databinding.ActivityChatBinding
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class ChatActivity : AppCompatActivity() {
 
@@ -84,6 +85,9 @@ class ChatActivity : AppCompatActivity() {
                 binding.chatRecyclerView.adapter = chatAdapter
                 //Adapter 및 RecyclerView 연결
 
+                // 이전 메시지의 날짜를 저장하는 변수
+                var previousDayMessage: String? = null
+
                 chatRef.addValueEventListener(object : ValueEventListener {
 
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -95,7 +99,24 @@ class ChatActivity : AppCompatActivity() {
                             val chatMessage = childSnapshot.getValue(ChatMessage::class.java)
 
                             chatMessage?.let {
+
+                                val currentDayMessage = it.dayStamp
+
+                                if (previousDayMessage != currentDayMessage) {
+
+                                    if(previousDayMessage != null){
+                                        messages.add(ChatMessage(0,"","","","",
+                                            currentDayMessage, true))
+                                        // 이후 현재 메시지의 날짜를 이전 메시지의 날짜로 설정
+                                    }
+
+                                    previousDayMessage = currentDayMessage
+
+                                    Log.e("TAG","날짜 삽입")
+
+                                }//날짜 표
                                 messages.add(it)
+
                             }
 
                         }
@@ -117,16 +138,26 @@ class ChatActivity : AppCompatActivity() {
         }
 
 
-
         binding.sendButton.setOnClickListener {
 
             val messageText = binding.messageInputEditText.text.toString()
 
             if(messageText.isNotBlank()){
 
-                val message = ChatMessage(userId , userImg, userName , messageText , getCurrentTimeAsString())
+                val message = ChatMessage(
+                    userId,
+                    userImg,
+                    userName,
+                    messageText,
+                    getCurrentTimeAsString(),
+                    getCurrentDateAsInt(),
+                    false
+                )
+
                 chatRef.push().setValue(message)
                 binding.messageInputEditText.text.clear()
+
+
 
             }
 
@@ -193,6 +224,23 @@ class ChatActivity : AppCompatActivity() {
 
 
     }
+
+    private fun getCurrentDateAsInt(): String {
+        // 현재 날짜를 가져옵니다.
+        val currentDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LocalDate.now()
+        } else {
+            TODO("VERSION.SDK_INT < O")
+        }
+
+        // 날짜를 yyyyMMdd 형식의 숫자로 반환합니다.
+        val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
+        return currentDate.format(formatter)
+
+    }
+
+
+
 
     private fun getOut(){
 

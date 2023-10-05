@@ -41,8 +41,6 @@ class ListFragment : Fragment() {
         val cafeListRecyclerView : RecyclerView = binding.cafeListRecycler
         cafeListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-
-
         val cafeList = listOf(
 
             CafeIntel("https://firebasestorage.googleapis.com/v0/b/kanect-ced83.appspot.com/o/starbucks_logo.PNG?alt=media&token=d2a0d513-dacd-4862-8e7e-ec2decc5d91e",
@@ -63,6 +61,8 @@ class ListFragment : Fragment() {
             //전체 좌석 , 플러그 좌석 수 조사
 
          )
+
+
 
         val coroutineScope = CoroutineScope(Dispatchers.Main)
 
