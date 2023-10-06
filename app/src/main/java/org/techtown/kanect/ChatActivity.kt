@@ -19,6 +19,10 @@ import com.google.firebase.database.Transaction
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.kakao.sdk.user.UserApiClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.techtown.kanect.Adapter.CafeListAdapter
 import org.techtown.kanect.Adapter.ChatAdapter
 import org.techtown.kanect.Data.ChatMessage
 import org.techtown.kanect.databinding.ActivityChatBinding
@@ -68,6 +72,27 @@ class ChatActivity : AppCompatActivity() {
         //카페 입장 수 조회
         chatNumRef = database.reference.child("chatNum").child(cafeName).child("entryCount")
         uploadCafeCount(true) // 입장
+
+
+
+        // 채팅 참여자가 변경될때 마다 UI 업데이트
+        val entryCountRef = database.reference.child("chatNum").child(cafeName).child("entryCount")
+
+        entryCountRef.addValueEventListener(object : ValueEventListener {
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                val entryCount = dataSnapshot.getValue(Int::class.java) ?: 0
+
+                binding.chatNum.text = entryCount.toString()
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("Firebase", "데이터베이스 오류: ${databaseError.message}")
+            }
+
+        })
 
 
         UserApiClient.instance.me { user, error ->
