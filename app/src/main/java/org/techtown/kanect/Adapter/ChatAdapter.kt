@@ -132,6 +132,7 @@ class ChatAdapter(private val messages : List<ChatMessage> , private val myId : 
     }
 
     private fun formatDateString(inputDate: String): String {
+
         try {
             val inputFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
             val outputFormat = SimpleDateFormat("yyyy년 MM월 dd일 EEEE", Locale.getDefault())
@@ -143,6 +144,7 @@ class ChatAdapter(private val messages : List<ChatMessage> , private val myId : 
         } catch (e: Exception) {
             e.printStackTrace()
         }
+        
         return ""
 
     }

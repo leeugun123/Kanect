@@ -80,11 +80,13 @@ class CafeListAdapter(private val cafeList : List<CafeIntel>) : RecyclerView.Ada
         }
 
 
-        if(cafeList.cur_seat / cafeList.seat >= 0.5){
+        if (cafeList.cur_seat.toDouble() / cafeList.seat >= 0.5) {
             holder.binding.curSeat.text = "HOT"
-        }
-        else
+            holder.binding.curSeat.setTextColor(Color.RED)
+        } else {
             holder.binding.curSeat.text = "FREE"
+            holder.binding.curSeat.setTextColor(Color.BLUE)
+        }
 
 
 

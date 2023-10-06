@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="horizontal">
 
@@ -14,7 +14,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:orientation="vertical">
 
@@ -31,8 +31,11 @@
             android:id="@+id/chatUserText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="나는 사실 아무것도 몰라요!!!"
-            android:textSize="20sp"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:background="@drawable/rounded_yellow_background"
             />
 
 
@@ -42,6 +45,7 @@
         android:id="@+id/chatUserTimeStamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:text="오후 9:42"
         android:layout_gravity="bottom"
         />

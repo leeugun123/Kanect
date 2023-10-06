@@ -116,7 +116,8 @@
             android:text="HOT"
             android:textColor="#D50000"
             android:layout_gravity="right"
-            android:textSize="30sp" />
+            android:textSize="25sp"
+            android:textStyle="bold"/>
 
 
 

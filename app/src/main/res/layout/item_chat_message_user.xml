@@ -17,6 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:layout_marginRight="5dp"
         android:text="오후 03:00"
         />
 
@@ -25,12 +26,13 @@
         android:id="@+id/chatUserText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#FFEB3B"
+        android:padding="10dp"
+        android:background="@drawable/rounded_yellow_background"
         android:text="저도 좋아요!"
         android:textColor="@color/black"
         android:layout_gravity="right"
         android:gravity="right"
-        android:textSize="20sp"
+        android:textSize="15sp"
         />
 
 

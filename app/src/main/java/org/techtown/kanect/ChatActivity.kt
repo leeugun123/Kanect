@@ -86,13 +86,17 @@ class ChatActivity : AppCompatActivity() {
                 //Adapter 및 RecyclerView 연결
 
                 // 이전 메시지의 날짜를 저장하는 변수
-                var previousDayMessage: String? = null
+
 
                 chatRef.addValueEventListener(object : ValueEventListener {
 
                     override fun onDataChange(snapshot: DataSnapshot) {
 
+                        var previousDayMessage: String? = null
+
                         messages.clear()
+
+                        Log.e("TAG","파베 조회")
 
                         for (childSnapshot in snapshot.children) {
 
@@ -104,11 +108,9 @@ class ChatActivity : AppCompatActivity() {
 
                                 if (previousDayMessage != currentDayMessage) {
 
-                                    if(previousDayMessage != null){
-                                        messages.add(ChatMessage(0,"","","","",
+                                    messages.add(ChatMessage(0,"","","","",
                                             currentDayMessage, true))
                                         // 이후 현재 메시지의 날짜를 이전 메시지의 날짜로 설정
-                                    }
 
                                     previousDayMessage = currentDayMessage
 
@@ -156,7 +158,6 @@ class ChatActivity : AppCompatActivity() {
 
                 chatRef.push().setValue(message)
                 binding.messageInputEditText.text.clear()
-
 
 
             }
