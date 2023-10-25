@@ -66,9 +66,8 @@ class ChatAdapter(private val messages : List<ChatMessage> , private val myId : 
 
         }
 
-
-
     }
+
 
     override fun onBindViewHolder(holder : RecyclerView.ViewHolder, position : Int) {
 
@@ -130,6 +129,8 @@ class ChatAdapter(private val messages : List<ChatMessage> , private val myId : 
         }
 
     }
+
+
 
     private fun formatDateString(inputDate: String): String {
 

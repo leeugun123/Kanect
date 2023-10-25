@@ -66,7 +66,7 @@ class DetailActivity : AppCompatActivity() {
             intent.putExtra("cafeName",cafeInfo.cafeName)
             startActivity(intent)
 
-        }
+        }//리뷰 버튼
 
         binding.chatbut.setOnClickListener {
 
@@ -94,7 +94,8 @@ class DetailActivity : AppCompatActivity() {
             val alertDialog = alertDialogBuilder.create()
             alertDialog.show()
 
-        }
+        }//채팅 버튼
+
 
 
 

@@ -6,7 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.techtown.kanect.Fragment.ListFragment
-import org.techtown.kanect.Fragment.MyFragment
+import org.techtown.kanect.Fragment.PostFragment
 import org.techtown.kanect.Fragment.TalkFragment
 import org.techtown.kanect.databinding.ActivityMainBinding
 
@@ -45,10 +45,10 @@ class MainActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
                 return true;
 
             }
-            R.id.navigation_my -> {
+            R.id.navigation_post -> {
 
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-                    MyFragment()
+                    PostFragment()
                 ).commitAllowingStateLoss()
                 return true;
 

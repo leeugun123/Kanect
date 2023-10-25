@@ -35,12 +35,7 @@ class CafeReviewViewModel : ViewModel() {
                         dataList.add(it)
                     }
 
-
                 }
-
-                //Collections.reverse(dataList)
-
-
                 _cafeReviewLiveData.value = dataList
             }
 

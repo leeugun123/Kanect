@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="나는 사실 아무것도 몰라요!!!"
+            android:text="안녕하세요"
             android:textSize="15sp"
             android:textColor="@color/black"
             android:background="@drawable/rounded_yellow_background"

@@ -10,8 +10,8 @@
         android:icon="@drawable/ic_baseline_talk"
         android:title="대화창" />
     <item
-        android:id="@+id/navigation_my"
+        android:id="@+id/navigation_post"
         android:icon="@drawable/ic_baseline_person"
-        android:title="내 정보" />
+        android:title="인증" />
 
 </menu>

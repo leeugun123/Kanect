@@ -55,7 +55,10 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Intent로 받아온 정보 업데이트
+
         cafeName = intent.getStringExtra("cafeName").toString()
+        chatRef = database.reference.child("chat").child(cafeName)
 
         Glide.with(this)
             .load(intent.getStringExtra("cafeImg"))
@@ -63,19 +66,15 @@ class ChatActivity : AppCompatActivity() {
             .fitCenter()
             .into(binding.cafeImg)
 
-
         binding.cafeName.text = cafeName
-
-        chatRef = database.reference.child("chat").child(cafeName)
         Toast.makeText(this, cafeName + "에 입장하였습니다.",Toast.LENGTH_SHORT).show()
+
 
         //카페 입장 수 조회
         chatNumRef = database.reference.child("chatNum").child(cafeName).child("entryCount")
         uploadCafeCount(true) // 입장
 
-
-
-        // 채팅 참여자가 변경될때 마다 UI 업데이트
+        // 채팅 참여자 수가 변경될때 마다 UI 업데이트
         val entryCountRef = database.reference.child("chatNum").child(cafeName).child("entryCount")
 
         entryCountRef.addValueEventListener(object : ValueEventListener {
@@ -94,6 +93,7 @@ class ChatActivity : AppCompatActivity() {
 
         })
 
+        //파이어베이스를 이용한 채팅 정보 조회
 
         UserApiClient.instance.me { user, error ->
 
@@ -111,8 +111,7 @@ class ChatActivity : AppCompatActivity() {
                 //Adapter 및 RecyclerView 연결
 
                 // 이전 메시지의 날짜를 저장하는 변수
-
-
+4
                 chatRef.addValueEventListener(object : ValueEventListener {
 
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -120,8 +119,6 @@ class ChatActivity : AppCompatActivity() {
                         var previousDayMessage: String? = null
 
                         messages.clear()
-
-                        Log.e("TAG","파베 조회")
 
                         for (childSnapshot in snapshot.children) {
 
@@ -134,14 +131,12 @@ class ChatActivity : AppCompatActivity() {
                                 if (previousDayMessage != currentDayMessage) {
 
                                     messages.add(ChatMessage(0,"","","","",
-                                            currentDayMessage, true))
-                                        // 이후 현재 메시지의 날짜를 이전 메시지의 날짜로 설정
+                                            currentDayMessage, true))   // 이후 현재 메시지의 날짜를 이전 메시지의 날짜로 설정
 
                                     previousDayMessage = currentDayMessage
 
-                                    Log.e("TAG","날짜 삽입")
+                                }//날짜 표를 중간마다 설정
 
-                                }//날짜 표
                                 messages.add(it)
 
                             }
@@ -149,16 +144,15 @@ class ChatActivity : AppCompatActivity() {
                         }
 
                         chatAdapter.notifyDataSetChanged()
-                        binding.chatRecyclerView.scrollToPosition(messages.size - 1)
+                        binding.chatRecyclerView.scrollToPosition(messages.size - 1)//최근 메세지로 View 이동
 
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        // 처리되지 않은 오류를 처리
+
                     }
 
                 })
-                //채팅 목록 가져오기
 
             }
 
