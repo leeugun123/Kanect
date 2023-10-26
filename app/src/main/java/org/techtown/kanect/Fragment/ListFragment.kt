@@ -79,6 +79,7 @@ class ListFragment : Fragment() {
             }
 
             cafeListRecyclerView.adapter = CafeListAdapter(cafeList)
+
         }
 
 

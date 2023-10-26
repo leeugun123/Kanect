@@ -1,6 +1,5 @@
 package org.techtown.kanect
 
-
 import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
@@ -14,29 +13,29 @@ import com.google.firebase.storage.StorageReference
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import com.kakao.sdk.user.UserApiClient
+import org.techtown.kanect.Data.DailyAuth
 import org.techtown.kanect.Data.PicAuth
-import org.techtown.kanect.databinding.ActivityAuthBinding
+import org.techtown.kanect.databinding.ActivityDailyAuthBinding
 import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
-class AuthActivity : AppCompatActivity() {
+class DailyAuthActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityAuthBinding
-    private val REQUEST_IMAGE_CAPTURE = 1
-    private var picComplete = false
+    private lateinit var binding : ActivityDailyAuthBinding
+    private val REQUEST_IMAGE_CAPTURE = 2
+    private var dailyAuthPic = false
+    private lateinit var imageBitmap : Bitmap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityAuthBinding.inflate(layoutInflater)
+        binding = ActivityDailyAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        binding.backBtn.setOnClickListener {
-            finish()
-        }//뒤로가기
 
         binding.takePicBut.setOnClickListener {
 
-            // TedPermission을 사용하여 카메라 권한 요청
             TedPermission.create()
                 .setPermissionListener(object : PermissionListener {
 
@@ -59,61 +58,56 @@ class AuthActivity : AppCompatActivity() {
 
         }
 
-
         binding.authBut.setOnClickListener {
 
-            if(picComplete){
-                Toast.makeText(this,"인증이 완료되었습니다.",Toast.LENGTH_SHORT).show()
-                moveNextActivity()
+            if(dailyAuthPic && binding.authText.text.isNotBlank()){
 
-            }else{
-                Toast.makeText(this,"인증사진을 찍어주세요.",Toast.LENGTH_SHORT).show()
+                uploadImageToFirebaseStorage(imageBitmap , binding.authText.text.toString())
+
             }
-
-
 
         }
 
 
+
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
-            picComplete = true;
+            dailyAuthPic = true;
 
-            val imageBitmap = data?.extras?.get("data") as Bitmap
+            imageBitmap = data?.extras?.get("data") as Bitmap
 
             Glide.with(this)
                 .load(imageBitmap)
                 .centerCrop()
-                .into(binding.authPic)
-
-            // Firebase Storage에 업로드
-            uploadImageToFirebaseStorage(imageBitmap)
-
+                .into(binding.authImageView)
 
         }
 
+
+
     }
 
-    private fun uploadImageToFirebaseStorage(imageBitmap : Bitmap) {
+
+    private fun uploadImageToFirebaseStorage(imageBitmap : Bitmap , authText : String) {
 
         // 이미지 파일 이름을 현재 시간으로 지정
-        val imageFileName = "image_${System.currentTimeMillis()}.jpg"
+        val imageFileName = "imageDailyAuth_${System.currentTimeMillis()}.jpg"
 
         val storage = FirebaseStorage.getInstance()
         val storageRef: StorageReference = storage.reference
-        val imageRef: StorageReference = storageRef.child("images/$imageFileName")
+        val imageRef: StorageReference = storageRef.child("imagesDailyAuth/$imageFileName")
 
         // Bitmap을 ByteArray로 변환하여 업로드
         val baos = ByteArrayOutputStream()
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
 
         val imageData: ByteArray = baos.toByteArray()
-
         val uploadTask = imageRef.putBytes(imageData)
 
         uploadTask.addOnCompleteListener { task ->
@@ -122,20 +116,27 @@ class AuthActivity : AppCompatActivity() {
                 // 업로드 성공
                 imageRef.downloadUrl.addOnSuccessListener { uri ->
 
-                    val imageUrl = uri.toString()
+                    val dailyAuthImageUrl = uri.toString()
 
                     UserApiClient.instance.me { user, error ->
 
-                        user?.id?.let { userId ->
+                        user?.let {
 
-                            val picAuth = PicAuth(userId.toString(), imageUrl)
+                            val userName = it!!.kakaoAccount!!.profile!!.nickname.toString()
+                            val userImg = it.kakaoAccount!!.profile!!.profileImageUrl.toString()
+
+                            val dailyAuth = DailyAuth(userName,userImg,dailyAuthImageUrl,authText, getCurrentDate())
+
                             val databaseRef = FirebaseDatabase.getInstance().reference
-                            val newPicAuthRef = databaseRef.child("picAuths").child(userId.toString())
+                            val newDailyAuthRef = databaseRef.child("DailyAuths").push()
 
-                            newPicAuthRef.setValue(picAuth)
+                            newDailyAuthRef.setValue(dailyAuth)
                                 .addOnSuccessListener {
+
                                     Toast.makeText(this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show()
+
                                 }
+
                                 .addOnFailureListener {
                                     // 업로드 실패 처리
                                 }
@@ -143,6 +144,10 @@ class AuthActivity : AppCompatActivity() {
                         }
 
                     }//파이베이스에 데이터 올리기
+
+
+
+
 
                 }
 
@@ -155,12 +160,14 @@ class AuthActivity : AppCompatActivity() {
 
     }
 
-    private fun moveNextActivity(){
+    private fun getCurrentDate(): String {
 
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+        val currentDate = Calendar.getInstance().time
+        val dateFormat = SimpleDateFormat("yy/MM/dd", Locale.getDefault())
+        return dateFormat.format(currentDate)
 
     }
+
 
 
 

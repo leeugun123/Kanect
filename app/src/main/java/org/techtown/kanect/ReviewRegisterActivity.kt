@@ -40,7 +40,7 @@ class ReviewRegisterActivity : AppCompatActivity() {
             user?.let {
 
                 userName = it!!.kakaoAccount!!.profile!!.nickname.toString()
-                userImg = it.kakaoAccount!!.profile!!.profileImageUrl
+                userImg = it.kakaoAccount!!.profile!!.profileImageUrl.toString()
 
                 Glide.with(this)
                     .load(userImg)
