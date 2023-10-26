@@ -134,6 +134,8 @@ class DailyAuthActivity : AppCompatActivity() {
                                 .addOnSuccessListener {
 
                                     Toast.makeText(this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show()
+                                    finish()
+
 
                                 }
 
