@@ -20,9 +20,6 @@ class ReviewRegisterActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityReviewRegisterBinding
 
-    private var userName : String = ""
-    private var userImg : String? = ""
-
     private val database : FirebaseDatabase = FirebaseDatabase.getInstance()
     private val cafeReviewRef : DatabaseReference = database.getReference("cafeReview")
 
@@ -33,26 +30,14 @@ class ReviewRegisterActivity : AppCompatActivity() {
 
         val cafeInfo = intent.getStringExtra("cafeName")
 
-        Log.e("TAG",cafeInfo.toString())
+        Glide.with(this)
+            .load(UserKakaoInfo.userImg)
+            .circleCrop()
+            .override(100,100)
+            .into(binding.userImg)
 
-        UserApiClient.instance.me { user, error ->
+        binding.userName.text = UserKakaoInfo.userName
 
-            user?.let {
-
-                userName = it!!.kakaoAccount!!.profile!!.nickname.toString()
-                userImg = it.kakaoAccount!!.profile!!.profileImageUrl.toString()
-
-                Glide.with(this)
-                    .load(userImg)
-                    .circleCrop()
-                    .override(100,100)
-                    .into(binding.userImg)
-
-                binding.userName.text = userName
-                
-            }
-
-        }
 
         binding.registerBut.setOnClickListener {
 
@@ -60,7 +45,7 @@ class ReviewRegisterActivity : AppCompatActivity() {
 
                 val newUserRef : DatabaseReference = cafeReviewRef.child(cafeInfo.toString()).push()
 
-                newUserRef.setValue(UserIntel(userImg.toString() , userName , binding.reviewEdit.text.toString(),getCurrentDate()))
+                newUserRef.setValue(UserIntel(UserKakaoInfo.userImg , UserKakaoInfo.userName , binding.reviewEdit.text.toString(),getCurrentDate()))
                     .addOnSuccessListener {
 
                         Toast.makeText(this,"후기 작성 완료",Toast.LENGTH_SHORT).show()

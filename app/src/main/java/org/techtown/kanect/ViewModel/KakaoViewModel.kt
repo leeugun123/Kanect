@@ -7,8 +7,8 @@ import com.kakao.sdk.user.UserApiClient
 
 class KakaoViewModel : ViewModel() {
 
-    private val _userId = MutableLiveData<String>()
-    val userId : LiveData<String> get() = _userId
+    private val _userId = MutableLiveData<Long>()
+    val userId : LiveData<Long> get() = _userId
 
 
     private val _userName = MutableLiveData<String>()
@@ -28,7 +28,7 @@ class KakaoViewModel : ViewModel() {
 
             user?.let {
 
-                _userId.value = it.id.toString()
+                _userId.value = it.id
                 _userName.value = it.kakaoAccount?.profile?.nickname
                 _userImg.value = it.kakaoAccount?.profile?.profileImageUrl
 

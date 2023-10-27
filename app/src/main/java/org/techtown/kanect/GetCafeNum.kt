@@ -34,7 +34,10 @@ object GetCafeNum {
             // 예외 처리
             Log.e("Firebase", "데이터 가져오기 오류: ${e.message}")
             0 // 기본값 또는 오류 처리에 따라 반환값 설정
+
         }
+
+
 
     }
 

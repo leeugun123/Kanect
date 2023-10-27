@@ -40,9 +40,6 @@ class ChatActivity : AppCompatActivity() {
     // Firebase Realtime Database
     private val database = FirebaseDatabase.getInstance()
 
-    private var userImg : String = ""
-    private var userName : String = ""
-    private var userId : Long = 0
     private lateinit var cafeName : String
 
     private lateinit var chatRef : DatabaseReference
@@ -95,68 +92,57 @@ class ChatActivity : AppCompatActivity() {
 
         //파이어베이스를 이용한 채팅 정보 조회
 
-        UserApiClient.instance.me { user, error ->
 
-            user?.let {
+        chatAdapter = ChatAdapter(messages, UserKakaoInfo.userId)
+        val layoutManager = LinearLayoutManager(this)
+        binding.chatRecyclerView.layoutManager = layoutManager
+        binding.chatRecyclerView.adapter = chatAdapter
+        //Adapter 및 RecyclerView 연결
 
-                userId = it.id!!
-                userImg = it.kakaoAccount?.profile?.profileImageUrl.toString()
-                userName = it.kakaoAccount?.profile?.nickname.toString()
-                //카카오 api에서 정보 가져오기
-
-                chatAdapter = ChatAdapter(messages,userId)
-                val layoutManager = LinearLayoutManager(this)
-                binding.chatRecyclerView.layoutManager = layoutManager
-                binding.chatRecyclerView.adapter = chatAdapter
-                //Adapter 및 RecyclerView 연결
-
-                // 이전 메시지의 날짜를 저장하는 변수
+        // 이전 메시지의 날짜를 저장하는 변수
 4
-                chatRef.addValueEventListener(object : ValueEventListener {
+        chatRef.addValueEventListener(object : ValueEventListener {
 
-                    override fun onDataChange(snapshot: DataSnapshot) {
+            override fun onDataChange(snapshot: DataSnapshot) {
 
-                        var previousDayMessage: String? = null
+                var previousDayMessage: String? = null
 
-                        messages.clear()
+                messages.clear()
 
-                        for (childSnapshot in snapshot.children) {
+                for (childSnapshot in snapshot.children) {
 
-                            val chatMessage = childSnapshot.getValue(ChatMessage::class.java)
+                    val chatMessage = childSnapshot.getValue(ChatMessage::class.java)
 
-                            chatMessage?.let {
+                    chatMessage?.let {
 
-                                val currentDayMessage = it.dayStamp
+                        val currentDayMessage = it.dayStamp
 
-                                if (previousDayMessage != currentDayMessage) {
+                        if(previousDayMessage != currentDayMessage) {
 
-                                    messages.add(ChatMessage(0,"","","","",
-                                            currentDayMessage, true))   // 이후 현재 메시지의 날짜를 이전 메시지의 날짜로 설정
+                            messages.add(ChatMessage(0,"","","","",
+                                currentDayMessage, true))   // 이후 현재 메시지의 날짜를 이전 메시지의 날짜로 설정
 
-                                    previousDayMessage = currentDayMessage
+                            previousDayMessage = currentDayMessage
 
-                                }//날짜 표를 중간마다 설정
+                        }//날짜 표를 중간마다 설정
 
-                                messages.add(it)
-
-                            }
-
-                        }
-
-                        chatAdapter.notifyDataSetChanged()
-                        binding.chatRecyclerView.scrollToPosition(messages.size - 1)//최근 메세지로 View 이동
+                        messages.add(it)
 
                     }
 
-                    override fun onCancelled(error: DatabaseError) {
+                }
 
-                    }
-
-                })
+                chatAdapter.notifyDataSetChanged()
+                binding.chatRecyclerView.scrollToPosition(messages.size - 1)//최근 메세지로 View 이동
 
             }
 
-        }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+
+        })
 
 
         binding.sendButton.setOnClickListener {
@@ -166,9 +152,9 @@ class ChatActivity : AppCompatActivity() {
             if(messageText.isNotBlank()){
 
                 val message = ChatMessage(
-                    userId,
-                    userImg,
-                    userName,
+                    UserKakaoInfo.userId,
+                    UserKakaoInfo.userImg,
+                    UserKakaoInfo.userName,
                     messageText,
                     getCurrentTimeAsString(),
                     getCurrentDateAsInt(),

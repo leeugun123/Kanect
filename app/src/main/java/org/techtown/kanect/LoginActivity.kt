@@ -123,7 +123,7 @@ class LoginActivity : AppCompatActivity() {
         var intent : Intent?
 
         GlobalScope.launch(Dispatchers.Main) {
-            loginViewModel.checkDataExistence(UserKakaoInfo.userId)
+            loginViewModel.checkDataExistence(UserKakaoInfo.userId.toString())
         }
 
         loginViewModel.loginStatus.observe(this) { exists ->
@@ -149,7 +149,7 @@ class LoginActivity : AppCompatActivity() {
         kakaoViewModel.fetchUserInfo()
 
         kakaoViewModel.userId.observe(this) { userId ->
-            UserKakaoInfo.userId = userId.toString()
+            UserKakaoInfo.userId = userId
         }
 
         kakaoViewModel.userName.observe(this) { userName ->
@@ -160,9 +160,7 @@ class LoginActivity : AppCompatActivity() {
             UserKakaoInfo.userImg = userImg.toString()
         }
 
-
     }
-
 
 
 

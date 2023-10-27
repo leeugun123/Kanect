@@ -124,36 +124,28 @@ class AuthActivity : AppCompatActivity() {
 
                     val imageUrl = uri.toString()
 
-                    UserApiClient.instance.me { user, error ->
+                    val picAuth = PicAuth(UserKakaoInfo.userId.toString() , imageUrl)
+                    val databaseRef = FirebaseDatabase.getInstance().reference
+                    val newPicAuthRef = databaseRef.child("picAuths").child(UserKakaoInfo.userId.toString())
 
-                        user?.id?.let { userId ->
+                    newPicAuthRef.setValue(picAuth).addOnSuccessListener {
 
-                            val picAuth = PicAuth(userId.toString(), imageUrl)
-                            val databaseRef = FirebaseDatabase.getInstance().reference
-                            val newPicAuthRef = databaseRef.child("picAuths").child(userId.toString())
+                        Toast.makeText(this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show()
 
-                            newPicAuthRef.setValue(picAuth)
-                                .addOnSuccessListener {
-                                    Toast.makeText(this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show()
-                                }
-                                .addOnFailureListener {
-                                    // 업로드 실패 처리
-                                }
+                    }.addOnFailureListener {} // 업로드 실패 처리
 
-                        }
 
-                    }//파이베이스에 데이터 올리기
 
                 }
 
             }
-            else {
-                // 업로드 실패
-            }
 
         }
 
+
     }
+
+
 
     private fun moveNextActivity(){
 
