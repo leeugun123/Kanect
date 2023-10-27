@@ -6,20 +6,25 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.database.FirebaseDatabase
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import org.techtown.kanect.ViewModel.LoginViewModel
 import org.techtown.kanect.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
+    private lateinit var loginViewModel : LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -27,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
         //----------------------카카오 로그인 api 관련 코드---------------------------------
 
@@ -41,7 +47,6 @@ class LoginActivity : AppCompatActivity() {
                 moveNextActivity()
 
             }
-
 
 
         }
@@ -84,10 +89,11 @@ class LoginActivity : AppCompatActivity() {
             } else if (token != null) {
 
                 Toast.makeText(this, "카카오 로그인", Toast.LENGTH_SHORT).show()
-
                 moveNextActivity()
 
             }
+
+
         }
 
 
@@ -95,14 +101,15 @@ class LoginActivity : AppCompatActivity() {
 
             if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
                 UserApiClient.instance.loginWithKakaoTalk(this,callback = callback)
-
             }
             else{
                 UserApiClient.instance.loginWithKakaoAccount(this,callback = callback)
             }
 
-
         }
+
+
+
 
 
     }
@@ -114,15 +121,23 @@ class LoginActivity : AppCompatActivity() {
 
             var intent : Intent?
 
-            if(checkId(user!!.id.toString())){
-                intent = Intent(this, MainActivity::class.java)
+            GlobalScope.launch(Dispatchers.Main) {
+                loginViewModel.checkDataExistence(user!!.id.toString())
+            }
+
+            loginViewModel.loginStatus.observe(this) { exists ->
+
+                intent = if (exists) {
+                    Intent(this, MainActivity::class.java)
+                } else {
+                    Intent(this, AuthActivity::class.java)
+                }
+
                 startActivity(intent)
                 finish()
+
             }
-            else{
-                intent = Intent(this, AuthActivity::class.java)
-                startActivity(intent)
-            }
+
 
         }
 
