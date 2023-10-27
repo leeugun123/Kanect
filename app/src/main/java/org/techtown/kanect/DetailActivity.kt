@@ -30,30 +30,8 @@ class DetailActivity : AppCompatActivity() {
         cafeReviewViewModel  = ViewModelProvider(this).get(CafeReviewViewModel::class.java)
 
         val cafeInfo = intent.getParcelableExtra<CafeIntel>("cafeIntel")
-
-
-        Glide.with(this)
-            .load(cafeInfo!!.cafeImg)
-            .fitCenter()
-            .into(binding.cafeImg)
-
-        binding.cafeName.text = cafeInfo.cafeName
-        binding.operTime.text = cafeInfo.operTime
-        binding.entireSeat.text = cafeInfo.seat.toString() + "여석"
-        binding.plugSeat.text = cafeInfo.plugSeat.toString() + "여석"
-        binding.curSeat.text = cafeInfo.cur_seat.toString() + "명"
-
-
-        userReviewRecyclerView = binding.userReviewRecyclerView
-        userReviewRecyclerView.layoutManager = LinearLayoutManager(this)
-
-        cafeReviewViewModel.getCafeReviewData(cafeInfo.cafeName)
-
-        cafeReviewViewModel.cafeReviewLiveData.observe(this, Observer {
-
-            userReviewRecyclerView.adapter = ReviewAdapter(it)
-
-        })
+        cafeInit(cafeInfo!!)
+        //카페 UI 업데이트
 
 
         binding.reviewBut.setOnClickListener{
@@ -93,11 +71,35 @@ class DetailActivity : AppCompatActivity() {
         }//채팅 버튼
 
 
+    }
+
+    private fun cafeInit(cafeInfo : CafeIntel){
+
+        Glide.with(this)
+            .load(cafeInfo!!.cafeImg)
+            .fitCenter()
+            .into(binding.cafeImg)
+
+        binding.cafeName.text = cafeInfo.cafeName
+        binding.operTime.text = cafeInfo.operTime
+        binding.entireSeat.text = cafeInfo.seat.toString() + "여석"
+        binding.plugSeat.text = cafeInfo.plugSeat.toString() + "여석"
+        binding.curSeat.text = cafeInfo.cur_seat.toString() + "명"
+
+        userReviewRecyclerView = binding.userReviewRecyclerView
+        userReviewRecyclerView.layoutManager = LinearLayoutManager(this)
+
+
+        cafeReviewViewModel.getCafeReviewData(cafeInfo.cafeName)
+
+        cafeReviewViewModel.cafeReviewLiveData.observe(this, Observer {
+
+            userReviewRecyclerView.adapter = ReviewAdapter(it)
+
+        })
 
 
     }
-
-
 
 
 }
