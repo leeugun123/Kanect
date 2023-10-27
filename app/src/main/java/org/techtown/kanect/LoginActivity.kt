@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import org.techtown.kanect.ViewModel.KakaoViewModel
 import org.techtown.kanect.ViewModel.LoginViewModel
 import org.techtown.kanect.databinding.ActivityLoginBinding
 
@@ -25,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
     private lateinit var loginViewModel : LoginViewModel
+    private lateinit var kakaoViewModel : KakaoViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -33,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        kakaoViewModel = ViewModelProvider(this).get(KakaoViewModel::class.java)
 
         //----------------------카카오 로그인 api 관련 코드---------------------------------
 
@@ -96,6 +99,8 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
+        getKakaoInfo()
+        //카카오 정보 가져오기
 
         binding.kakaoLoginBut.setOnClickListener {
 
@@ -111,60 +116,54 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-
     }
 
     private fun moveNextActivity(){
 
+        var intent : Intent?
 
-        UserApiClient.instance.me { user, error ->
+        GlobalScope.launch(Dispatchers.Main) {
+            loginViewModel.checkDataExistence(UserKakaoInfo.userId)
+        }
 
-            var intent : Intent?
+        loginViewModel.loginStatus.observe(this) { exists ->
 
-            GlobalScope.launch(Dispatchers.Main) {
-                loginViewModel.checkDataExistence(user!!.id.toString())
+            intent = if (exists) {
+                Intent(this, MainActivity::class.java)
+            } else {
+                Intent(this, AuthActivity::class.java)
             }
 
-            loginViewModel.loginStatus.observe(this) { exists ->
-
-                intent = if (exists) {
-                    Intent(this, MainActivity::class.java)
-                } else {
-                    Intent(this, AuthActivity::class.java)
-                }
-
-                startActivity(intent)
-                finish()
-
-            }
-
+            startActivity(intent)
+            finish()
 
         }
 
-        
 
     }
 
     //코루틴을 사용하여 백그라운드 스레드에서 userId가 파이어베이스에 존재하는지 체크
 
-    private suspend fun checkDataExistence(userId: String): Boolean = withContext(Dispatchers.IO) {
+    private fun getKakaoInfo(){
 
-        val database = FirebaseDatabase.getInstance()
-        val reference = database.reference.child("picAuths").child(userId)
+        kakaoViewModel.fetchUserInfo()
 
-        return@withContext try {
-            val dataSnapshot = reference.get().await()
-            dataSnapshot.exists()
-        } catch (e: Exception) {
-            false
+        kakaoViewModel.userId.observe(this) { userId ->
+            UserKakaoInfo.userId = userId.toString()
         }
 
+        kakaoViewModel.userName.observe(this) { userName ->
+            UserKakaoInfo.userName = userName
+        }
+
+        kakaoViewModel.userImg.observe(this) { userImg ->
+            UserKakaoInfo.userImg = userImg.toString()
+        }
+
+
     }
 
-    // 사용 예시
-    private fun checkId(userId : String) = runBlocking {
-        return@runBlocking checkDataExistence(userId)
-    }
+
 
 
 }
