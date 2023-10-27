@@ -1,16 +1,13 @@
 package org.techtown.kanect
 
-import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.kakao.sdk.user.UserApiClient
 import org.techtown.kanect.Data.UserIntel
+import org.techtown.kanect.Object.UserKakaoInfo
 import org.techtown.kanect.databinding.ActivityReviewRegisterBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar

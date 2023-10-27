@@ -13,8 +13,8 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
-import com.kakao.sdk.user.UserApiClient
 import org.techtown.kanect.Data.PicAuth
+import org.techtown.kanect.Object.UserKakaoInfo
 import org.techtown.kanect.databinding.ActivityAuthBinding
 import java.io.ByteArrayOutputStream
 

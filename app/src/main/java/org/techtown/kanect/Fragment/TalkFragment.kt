@@ -7,15 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.techtown.kanect.Adapter.CafeListAdapter
 import org.techtown.kanect.Adapter.CafeTalkAdapter
 import org.techtown.kanect.Data.CafeChatInfo
-import org.techtown.kanect.GetCafeNum
-import org.techtown.kanect.R
+import org.techtown.kanect.Object.GetCafeNum
 import org.techtown.kanect.databinding.FragmentTalkBinding
 
 

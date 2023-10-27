@@ -1,25 +1,18 @@
 package org.techtown.kanect.Fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.techtown.kanect.Adapter.CafeListAdapter
 import org.techtown.kanect.Data.CafeIntel
-import org.techtown.kanect.GetCafeNum
+import org.techtown.kanect.Object.GetCafeNum
 import org.techtown.kanect.databinding.FragmentListBinding
 import java.util.Calendar
 

@@ -1,4 +1,4 @@
-package org.techtown.kanect
+package org.techtown.kanect.Object
 
 import android.util.Log
 import com.google.firebase.database.DataSnapshot

@@ -1,23 +1,17 @@
 package org.techtown.kanect
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.google.firebase.database.FirebaseDatabase
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
-import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
+import org.techtown.kanect.Object.UserKakaoInfo
 import org.techtown.kanect.ViewModel.KakaoViewModel
 import org.techtown.kanect.ViewModel.LoginViewModel
 import org.techtown.kanect.databinding.ActivityLoginBinding

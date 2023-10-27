@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Message
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -17,20 +16,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.MutableData
 import com.google.firebase.database.Transaction
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
-import com.kakao.sdk.user.UserApiClient
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import org.techtown.kanect.Adapter.CafeListAdapter
 import org.techtown.kanect.Adapter.ChatAdapter
 import org.techtown.kanect.Data.ChatMessage
+import org.techtown.kanect.Object.UserKakaoInfo
 import org.techtown.kanect.databinding.ActivityChatBinding
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 class ChatActivity : AppCompatActivity() {
 
