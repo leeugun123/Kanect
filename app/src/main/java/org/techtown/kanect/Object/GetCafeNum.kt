@@ -8,7 +8,6 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.CompletableDeferred
 
 object GetCafeNum {
-
     suspend fun getCafeNum(cafeName: String): Int {
 
         val database = FirebaseDatabase.getInstance()
@@ -37,10 +36,6 @@ object GetCafeNum {
 
         }
 
-
-
     }
-
-
 
 }

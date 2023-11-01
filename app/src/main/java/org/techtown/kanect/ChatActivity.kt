@@ -16,8 +16,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.MutableData
 import com.google.firebase.database.Transaction
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.techtown.kanect.Adapter.CafeListAdapter
 import org.techtown.kanect.Adapter.ChatAdapter
 import org.techtown.kanect.Data.ChatMessage
+import org.techtown.kanect.Object.GetCafeNum
 import org.techtown.kanect.Object.UserKakaoInfo
 import org.techtown.kanect.databinding.ActivityChatBinding
 import java.time.LocalDate
@@ -59,28 +64,19 @@ class ChatActivity : AppCompatActivity() {
         Toast.makeText(this, cafeName + "에 입장하였습니다.",Toast.LENGTH_SHORT).show()
 
 
-        //카페 입장 수 조회
-        chatNumRef = database.reference.child("chatNum").child(cafeName).child("entryCount")
         uploadCafeCount(true) // 입장
 
+        //카페 입장 수 조회
         // 채팅 참여자 수가 변경될때 마다 UI 업데이트
-        val entryCountRef = database.reference.child("chatNum").child(cafeName).child("entryCount")
 
-        entryCountRef.addValueEventListener(object : ValueEventListener {
+        val coroutineScope = CoroutineScope(Dispatchers.Main)
 
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
+        coroutineScope.launch {
 
-                val entryCount = dataSnapshot.getValue(Int::class.java) ?: 0
+            val entryCount = GetCafeNum.getCafeNum(cafeName)
+            binding.chatNum.setText(entryCount) // cur_seat 업데이트
 
-                binding.chatNum.text = entryCount.toString()
-
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("Firebase", "데이터베이스 오류: ${databaseError.message}")
-            }
-
-        })
+        }
 
         //파이어베이스를 이용한 채팅 정보 조회
 
@@ -243,8 +239,6 @@ class ChatActivity : AppCompatActivity() {
     private fun getOut(){
 
         val alertDialogBuilder = AlertDialog.Builder(this)
-
-
         alertDialogBuilder.setTitle("채팅방 퇴장")
         alertDialogBuilder.setMessage("$cafeName 채팅방을 퇴장하시겠습니까?")
 
@@ -260,10 +254,8 @@ class ChatActivity : AppCompatActivity() {
 
         }
 
-
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
-
 
     }
 
