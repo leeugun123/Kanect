@@ -9,38 +9,27 @@ import com.google.firebase.database.FirebaseDatabase
 import org.techtown.kanect.Data.UserIntel
 import org.techtown.kanect.Object.UserKakaoInfo
 import org.techtown.kanect.databinding.ActivityReviewRegisterBinding
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 class ReviewRegisterActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityReviewRegisterBinding
-
-    private val database : FirebaseDatabase = FirebaseDatabase.getInstance()
-    private val cafeReviewRef : DatabaseReference = database.getReference("cafeReview")
+    private lateinit var cafeName : String
+    private lateinit var database : FirebaseDatabase
+    private lateinit var cafeReviewRef : DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReviewRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val cafeInfo = intent.getStringExtra("cafeName")
-
-        Glide.with(this)
-            .load(UserKakaoInfo.userImg)
-            .circleCrop()
-            .override(100,100)
-            .into(binding.userImg)
-
-        binding.userName.text = UserKakaoInfo.userName
+        reviewRegisterInit()
 
 
         binding.registerBut.setOnClickListener {
 
             if(binding.reviewEdit.text.toString().isNotEmpty()){
 
-                val newUserRef : DatabaseReference = cafeReviewRef.child(cafeInfo.toString()).push()
+                val newUserRef : DatabaseReference = cafeReviewRef.child(cafeName).push()
 
                 newUserRef.setValue(UserIntel(UserKakaoInfo.userImg , UserKakaoInfo.userName , binding.reviewEdit.text.toString(), org.techtown.kanect.Object.GetTime.getCurrentDate()))
                     .addOnSuccessListener {
@@ -58,6 +47,26 @@ class ReviewRegisterActivity : AppCompatActivity() {
             }
 
         }//후기 쓰기
+
+
+    }
+
+    private fun reviewRegisterInit(){
+
+        database = FirebaseDatabase.getInstance()
+        cafeReviewRef = database.getReference("cafeReview")
+
+
+        cafeName = intent.getStringExtra("cafeName").toString()
+
+        Glide.with(this)
+            .load(UserKakaoInfo.userImg)
+            .circleCrop()
+            .override(100,100)
+            .into(binding.userImg)
+
+        binding.userName.text = UserKakaoInfo.userName
+
 
 
     }
