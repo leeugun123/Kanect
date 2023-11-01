@@ -42,7 +42,7 @@ class ReviewRegisterActivity : AppCompatActivity() {
 
                 val newUserRef : DatabaseReference = cafeReviewRef.child(cafeInfo.toString()).push()
 
-                newUserRef.setValue(UserIntel(UserKakaoInfo.userImg , UserKakaoInfo.userName , binding.reviewEdit.text.toString(),getCurrentDate()))
+                newUserRef.setValue(UserIntel(UserKakaoInfo.userImg , UserKakaoInfo.userName , binding.reviewEdit.text.toString(), org.techtown.kanect.Object.GetTime.getCurrentDate()))
                     .addOnSuccessListener {
 
                         Toast.makeText(this,"후기 작성 완료",Toast.LENGTH_SHORT).show()
@@ -62,13 +62,7 @@ class ReviewRegisterActivity : AppCompatActivity() {
 
     }
 
-    private fun getCurrentDate(): String {
 
-        val currentDate = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("yy/MM/dd", Locale.getDefault())
-        return dateFormat.format(currentDate)
-
-    }
 
 
 

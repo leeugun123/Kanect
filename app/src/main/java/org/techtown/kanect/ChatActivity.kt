@@ -23,6 +23,7 @@ import org.techtown.kanect.Adapter.CafeListAdapter
 import org.techtown.kanect.Adapter.ChatAdapter
 import org.techtown.kanect.Data.ChatMessage
 import org.techtown.kanect.Object.GetCafeNum
+import org.techtown.kanect.Object.GetTime
 import org.techtown.kanect.Object.UserKakaoInfo
 import org.techtown.kanect.databinding.ActivityChatBinding
 import java.time.LocalDate
@@ -144,8 +145,8 @@ class ChatActivity : AppCompatActivity() {
                     UserKakaoInfo.userImg,
                     UserKakaoInfo.userName,
                     messageText,
-                    getCurrentTimeAsString(),
-                    getCurrentDateAsInt(),
+                    GetTime.getCurrentTimeAsString(),
+                    GetTime.getCurrentDateAsInt(),
                     false
                 )
 
@@ -205,33 +206,7 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun getCurrentTimeAsString(): String {
 
-        val currentTime = LocalTime.now()
-        val formatter = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            DateTimeFormatter.ofPattern("a hh:mm")
-        } else {
-            TODO("VERSION.SDK_INT < O")
-        }
-        return currentTime.format(formatter)
-
-
-    }
-
-    private fun getCurrentDateAsInt(): String {
-        // 현재 날짜를 가져옵니다.
-        val currentDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LocalDate.now()
-        } else {
-            TODO("VERSION.SDK_INT < O")
-        }
-
-        // 날짜를 yyyyMMdd 형식의 숫자로 반환합니다.
-        val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
-        return currentDate.format(formatter)
-
-    }
 
 
 
