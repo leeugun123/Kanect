@@ -15,6 +15,7 @@ import com.gun0912.tedpermission.normal.TedPermission
 import com.kakao.sdk.user.UserApiClient
 import org.techtown.kanect.Data.DailyAuth
 import org.techtown.kanect.Data.PicAuth
+import org.techtown.kanect.Object.GetTime
 import org.techtown.kanect.databinding.ActivityDailyAuthBinding
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
@@ -125,7 +126,7 @@ class DailyAuthActivity : AppCompatActivity() {
                             val userName = it!!.kakaoAccount!!.profile!!.nickname.toString()
                             val userImg = it.kakaoAccount!!.profile!!.profileImageUrl.toString()
 
-                            val dailyAuth = DailyAuth(userName,userImg,dailyAuthImageUrl,authText, getCurrentDate())
+                            val dailyAuth = DailyAuth(userName,userImg,dailyAuthImageUrl,authText, GetTime.getCurrentDate())
 
                             val databaseRef = FirebaseDatabase.getInstance().reference
                             val newDailyAuthRef = databaseRef.child("DailyAuths").push()
@@ -162,13 +163,7 @@ class DailyAuthActivity : AppCompatActivity() {
 
     }
 
-    private fun getCurrentDate(): String {
 
-        val currentDate = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("yy/MM/dd", Locale.getDefault())
-        return dateFormat.format(currentDate)
-
-    }
 
 
 

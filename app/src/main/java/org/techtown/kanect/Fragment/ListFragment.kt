@@ -21,9 +21,6 @@ class ListFragment : Fragment() {
     private lateinit var cafeListRecyclerView : RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
     }
 
 
