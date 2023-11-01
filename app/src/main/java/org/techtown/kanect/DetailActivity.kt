@@ -30,7 +30,7 @@ class DetailActivity : AppCompatActivity() {
         cafeReviewViewModel  = ViewModelProvider(this).get(CafeReviewViewModel::class.java)
 
         val cafeInfo = intent.getParcelableExtra<CafeIntel>("cafeIntel")
-        cafeInit(cafeInfo!!)
+        cafeDetailInit(cafeInfo!!)
         //카페 UI 업데이트
 
 
@@ -73,7 +73,7 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
-    private fun cafeInit(cafeInfo : CafeIntel){
+    private fun cafeDetailInit(cafeInfo : CafeIntel){
 
         Glide.with(this)
             .load(cafeInfo!!.cafeImg)
