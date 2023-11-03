@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
@@ -22,9 +23,11 @@ import kotlinx.coroutines.launch
 import org.techtown.kanect.Adapter.CafeListAdapter
 import org.techtown.kanect.Adapter.ChatAdapter
 import org.techtown.kanect.Data.ChatMessage
+import org.techtown.kanect.Object.CafeInit
 import org.techtown.kanect.Object.GetCafeNum
 import org.techtown.kanect.Object.GetTime
 import org.techtown.kanect.Object.UserKakaoInfo
+import org.techtown.kanect.ViewModel.CafeCountViewModel
 import org.techtown.kanect.databinding.ActivityChatBinding
 import java.time.LocalDate
 import java.time.LocalTime
@@ -39,54 +42,32 @@ class ChatActivity : AppCompatActivity() {
     private val database = FirebaseDatabase.getInstance()
 
     private lateinit var cafeName : String
-
     private lateinit var chatRef : DatabaseReference
-    private lateinit var chatNumRef : DatabaseReference
+   // private lateinit var chatNumRef : DatabaseReference
+
+    private lateinit var cafeCountViewModel : CafeCountViewModel
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityChatBinding.inflate(layoutInflater)
+        cafeCountViewModel = ViewModelProvider(this).get(CafeCountViewModel::class.java)
         setContentView(binding.root)
 
-        //Intent로 받아온 정보 업데이트
-
-        cafeName = intent.getStringExtra("cafeName").toString()
-        chatRef = database.reference.child("chat").child(cafeName)
-
-        Glide.with(this)
-            .load(intent.getStringExtra("cafeImg"))
-            .override(100,100)
-            .fitCenter()
-            .into(binding.cafeImg)
-
-        binding.cafeName.text = cafeName
-        Toast.makeText(this, cafeName + "에 입장하였습니다.",Toast.LENGTH_SHORT).show()
+        chatInit()
+        //UI 업데이트
+        //uploadCafeCount(true)
+        // 입장
 
 
-        uploadCafeCount(true) // 입장
+        cafeCountViewModel.getCafeNum(cafeName)
 
-        //카페 입장 수 조회
-        // 채팅 참여자 수가 변경될때 마다 UI 업데이트
-
-        val coroutineScope = CoroutineScope(Dispatchers.Main)
-
-        coroutineScope.launch {
-
-            val entryCount = GetCafeNum.getCafeNum(cafeName)
-            binding.chatNum.setText(entryCount) // cur_seat 업데이트
-
+        cafeCountViewModel.cafeChatNum.observe(this) { cafeChatNum ->
+            binding.chatNum.text = cafeChatNum.toString() + "명"
         }
 
-        //파이어베이스를 이용한 채팅 정보 조회
-
-
-        chatAdapter = ChatAdapter(messages, UserKakaoInfo.userId)
-        val layoutManager = LinearLayoutManager(this)
-        binding.chatRecyclerView.layoutManager = layoutManager
-        binding.chatRecyclerView.adapter = chatAdapter
-        //Adapter 및 RecyclerView 연결
 
         // 이전 메시지의 날짜를 저장하는 변수
 4
@@ -162,6 +143,30 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
+    private fun chatInit() {
+
+        cafeName = intent.getStringExtra("cafeName").toString()
+        chatRef = database.reference.child("chat").child(cafeName)
+
+        Glide.with(this)
+            .load(intent.getStringExtra("cafeImg"))
+            .override(100,100)
+            .fitCenter()
+            .into(binding.cafeImg)
+
+        binding.cafeName.text = cafeName
+        Toast.makeText(this, cafeName + "에 입장하였습니다.",Toast.LENGTH_SHORT).show()
+
+        chatAdapter = ChatAdapter(messages, UserKakaoInfo.userId)
+        val layoutManager = LinearLayoutManager(this)
+        binding.chatRecyclerView.layoutManager = layoutManager
+        binding.chatRecyclerView.adapter = chatAdapter
+        //Adapter 및 RecyclerView 연결
+
+
+    }
+
+    /*
     private fun uploadCafeCount(entry : Boolean){
         // 카페 입장 시 인원 추가
         chatNumRef.runTransaction(object : Transaction.Handler {
@@ -207,7 +212,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
 
-
+*/
 
 
 
@@ -220,7 +225,7 @@ class ChatActivity : AppCompatActivity() {
         // "예" 버튼 설정 및 클릭 리스너 추가
         alertDialogBuilder.setPositiveButton("예") { dialog, which ->
 
-            uploadCafeCount(false)
+            //uploadCafeCount(false)
             finish()
 
         }

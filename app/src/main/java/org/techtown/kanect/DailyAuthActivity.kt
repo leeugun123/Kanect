@@ -40,6 +40,7 @@ class DailyAuthActivity : AppCompatActivity() {
         takePicViewModel = ViewModelProvider(this).get(TakePicViewModel::class.java)
 
 
+
         binding.takePicBut.setOnClickListener {
 
             TedPermission.create()

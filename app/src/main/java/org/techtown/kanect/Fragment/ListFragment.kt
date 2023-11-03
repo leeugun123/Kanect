@@ -51,11 +51,6 @@ class ListFragment : Fragment() {
 
     }
 
-    private fun cafeCountViewModelObserve(){
-
-
-
-    }
 
 
 

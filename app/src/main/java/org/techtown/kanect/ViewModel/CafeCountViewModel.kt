@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import org.techtown.kanect.Data.CafeChatInfo
 import org.techtown.kanect.Data.CafeIntel
 import org.techtown.kanect.Object.GetCafeNum
+import org.techtown.kanect.Object.GetCafeNum.getCafeNum
 
 class CafeCountViewModel : ViewModel() {
 
@@ -19,6 +20,13 @@ class CafeCountViewModel : ViewModel() {
 
     private val _cafeChatList = MutableLiveData<List<CafeChatInfo>>()
     val cafeChatList: LiveData<List<CafeChatInfo>> get() = _cafeChatList
+
+
+    private val _cafeChatNum = MutableLiveData<Int>()
+    val cafeChatNum: LiveData<Int> get() = _cafeChatNum
+
+
+
 
     fun getCafeListData(cafeList: List<CafeIntel>) {
 
@@ -51,6 +59,14 @@ class CafeCountViewModel : ViewModel() {
 
             _cafeChatList.value = updatedList
 
+        }
+
+    }
+
+    fun getCafeNum(cafeName : String){
+
+        coroutineScope.launch {
+            _cafeChatNum.value = GetCafeNum.getCafeNum(cafeName)
         }
 
     }
