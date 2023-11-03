@@ -78,6 +78,7 @@ class DailyAuthActivity : AppCompatActivity() {
 
             if (isUploaded) {
                 Toast.makeText(this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show()
+                finish()
             } else {
                 // 데이터 업로드 실패 처리
             }
