@@ -30,21 +30,32 @@ class TakePicViewModel : ViewModel() {
         val uploadTask = imageRef.putBytes(imageData)
 
         uploadTask.addOnCompleteListener { task ->
+
             if (task.isSuccessful) {
+
                 imageRef.downloadUrl.addOnSuccessListener { uri ->
+
                     val imageUrl = uri.toString()
                     val picAuth = PicAuth(userId, imageUrl)
                     val databaseRef = FirebaseDatabase.getInstance().reference
                     val newPicAuthRef = databaseRef.child("picAuths").child(userId)
+
                     newPicAuthRef.setValue(picAuth).addOnSuccessListener {
                         _uploadSuccess.value = true
                     }.addOnFailureListener {
                         _uploadSuccess.value = false
                     }
+
                 }
+
             }
+
         }
+
     }
+
+
+
 
 
 }
