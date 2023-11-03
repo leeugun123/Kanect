@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -15,6 +16,7 @@ import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import org.techtown.kanect.Data.PicAuth
 import org.techtown.kanect.Object.UserKakaoInfo
+import org.techtown.kanect.ViewModel.TakePicViewModel
 import org.techtown.kanect.databinding.ActivityAuthBinding
 import java.io.ByteArrayOutputStream
 
@@ -23,12 +25,16 @@ class AuthActivity : AppCompatActivity() {
     private lateinit var binding : ActivityAuthBinding
     private val REQUEST_IMAGE_CAPTURE = 1
     private var picComplete = false
+    private lateinit var takePicViewModel : TakePicViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        takePicViewModel = ViewModelProvider(this).get(TakePicViewModel::class.java)
+
 
         binding.backBtn.setOnClickListener {
             finish()
@@ -70,7 +76,15 @@ class AuthActivity : AppCompatActivity() {
                 Toast.makeText(this,"인증사진을 찍어주세요.",Toast.LENGTH_SHORT).show()
             }
 
+        }
 
+        takePicViewModel.uploadSuccess.observe(this) { isUploaded ->
+
+            if (isUploaded) {
+                Toast.makeText(this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show()
+            } else {
+                // 데이터 업로드 실패 처리
+            }
 
         }
 
@@ -92,58 +106,13 @@ class AuthActivity : AppCompatActivity() {
                 .into(binding.authPic)
 
             // Firebase Storage에 업로드
-            uploadImageToFirebaseStorage(imageBitmap)
-
+            takePicViewModel.uploadImageToFirebaseStorage(imageBitmap , UserKakaoInfo.userId.toString())
 
         }
 
     }
 
-    private fun uploadImageToFirebaseStorage(imageBitmap : Bitmap) {
 
-        // 이미지 파일 이름을 현재 시간으로 지정
-        val imageFileName = "image_${System.currentTimeMillis()}.jpg"
-
-        val storage = FirebaseStorage.getInstance()
-        val storageRef: StorageReference = storage.reference
-        val imageRef: StorageReference = storageRef.child("images/$imageFileName")
-
-        // Bitmap을 ByteArray로 변환하여 업로드
-        val baos = ByteArrayOutputStream()
-        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-
-        val imageData: ByteArray = baos.toByteArray()
-
-        val uploadTask = imageRef.putBytes(imageData)
-
-        uploadTask.addOnCompleteListener { task ->
-
-            if (task.isSuccessful) {
-                // 업로드 성공
-                imageRef.downloadUrl.addOnSuccessListener { uri ->
-
-                    val imageUrl = uri.toString()
-
-                    val picAuth = PicAuth(UserKakaoInfo.userId.toString() , imageUrl)
-                    val databaseRef = FirebaseDatabase.getInstance().reference
-                    val newPicAuthRef = databaseRef.child("picAuths").child(UserKakaoInfo.userId.toString())
-
-                    newPicAuthRef.setValue(picAuth).addOnSuccessListener {
-
-                        Toast.makeText(this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show()
-
-                    }.addOnFailureListener {} // 업로드 실패 처리
-
-
-
-                }
-
-            }
-
-        }
-
-
-    }
 
 
 
