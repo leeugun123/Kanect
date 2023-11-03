@@ -28,6 +28,7 @@ import org.techtown.kanect.Object.GetCafeNum
 import org.techtown.kanect.Object.GetTime
 import org.techtown.kanect.Object.UserKakaoInfo
 import org.techtown.kanect.ViewModel.CafeCountViewModel
+import org.techtown.kanect.ViewModel.ChatDataViewModel
 import org.techtown.kanect.databinding.ActivityChatBinding
 import java.time.LocalDate
 import java.time.LocalTime
@@ -39,13 +40,11 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var chatAdapter : ChatAdapter
     private val messages: MutableList<ChatMessage> = mutableListOf()
     // Firebase Realtime Database
-    private val database = FirebaseDatabase.getInstance()
-
     private lateinit var cafeName : String
-    private lateinit var chatRef : DatabaseReference
-   // private lateinit var chatNumRef : DatabaseReference
+
 
     private lateinit var cafeCountViewModel : CafeCountViewModel
+    private lateinit var chatDataViewModel : ChatDataViewModel
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -54,6 +53,7 @@ class ChatActivity : AppCompatActivity() {
 
         binding = ActivityChatBinding.inflate(layoutInflater)
         cafeCountViewModel = ViewModelProvider(this).get(CafeCountViewModel::class.java)
+        chatDataViewModel = ViewModelProvider(this).get(ChatDataViewModel::class.java)
         setContentView(binding.root)
 
         chatInit()
@@ -63,60 +63,20 @@ class ChatActivity : AppCompatActivity() {
 
 
         cafeCountViewModel.getCafeNum(cafeName)
+        chatDataViewModel.getChatMessage(cafeName)
 
         cafeCountViewModel.cafeChatNum.observe(this) { cafeChatNum ->
             binding.chatNum.text = cafeChatNum.toString() + "명"
         }
 
-
-        // 이전 메시지의 날짜를 저장하는 변수
-4
-        chatRef.addValueEventListener(object : ValueEventListener {
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-                var previousDayMessage: String? = null
-
-                messages.clear()
-
-                for (childSnapshot in snapshot.children) {
-
-                    val chatMessage = childSnapshot.getValue(ChatMessage::class.java)
-
-                    chatMessage?.let {
-
-                        val currentDayMessage = it.dayStamp
-
-                        if(previousDayMessage != currentDayMessage) {
-
-                            messages.add(ChatMessage(0,"","","","",
-                                currentDayMessage, true))   // 이후 현재 메시지의 날짜를 이전 메시지의 날짜로 설정
-
-                            previousDayMessage = currentDayMessage
-
-                        }//날짜 표를 중간마다 설정
-
-                        messages.add(it)
-
-                    }
-
-                }
-
-                chatAdapter.notifyDataSetChanged()
-                binding.chatRecyclerView.scrollToPosition(messages.size - 1)//최근 메세지로 View 이동
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-
-        })
+        chatDataViewModel.chatMessageLiveData.observe(this){ chatList->
+            chatUpdate(chatList)
+        }
 
 
         binding.sendButton.setOnClickListener {
 
+            /*
             val messageText = binding.messageInputEditText.text.toString()
 
             if(messageText.isNotBlank()){
@@ -137,6 +97,8 @@ class ChatActivity : AppCompatActivity() {
 
             }
 
+            */
+
         }//전송 버튼
 
 
@@ -146,7 +108,6 @@ class ChatActivity : AppCompatActivity() {
     private fun chatInit() {
 
         cafeName = intent.getStringExtra("cafeName").toString()
-        chatRef = database.reference.child("chat").child(cafeName)
 
         Glide.with(this)
             .load(intent.getStringExtra("cafeImg"))
@@ -155,14 +116,23 @@ class ChatActivity : AppCompatActivity() {
             .into(binding.cafeImg)
 
         binding.cafeName.text = cafeName
-        Toast.makeText(this, cafeName + "에 입장하였습니다.",Toast.LENGTH_SHORT).show()
 
         chatAdapter = ChatAdapter(messages, UserKakaoInfo.userId)
+
+
+        Toast.makeText(this, cafeName + "에 입장하였습니다.",Toast.LENGTH_SHORT).show()
+
+    }
+
+    private fun chatUpdate(chatList : MutableList<ChatMessage>){
+
+        chatAdapter = ChatAdapter(chatList, UserKakaoInfo.userId)
+
         val layoutManager = LinearLayoutManager(this)
         binding.chatRecyclerView.layoutManager = layoutManager
         binding.chatRecyclerView.adapter = chatAdapter
-        //Adapter 및 RecyclerView 연결
-
+        binding.chatRecyclerView.scrollToPosition(chatList.size - 1)
+        //최근 메세지로 View 이동
 
     }
 
@@ -214,8 +184,6 @@ class ChatActivity : AppCompatActivity() {
 
 */
 
-
-
     private fun getOut(){
 
         val alertDialogBuilder = AlertDialog.Builder(this)
@@ -223,14 +191,14 @@ class ChatActivity : AppCompatActivity() {
         alertDialogBuilder.setMessage("$cafeName 채팅방을 퇴장하시겠습니까?")
 
         // "예" 버튼 설정 및 클릭 리스너 추가
-        alertDialogBuilder.setPositiveButton("예") { dialog, which ->
+        alertDialogBuilder.setPositiveButton("예") { _, _ ->
 
             //uploadCafeCount(false)
             finish()
 
         }
 
-        alertDialogBuilder.setNegativeButton("아니요") { dialog, which ->
+        alertDialogBuilder.setNegativeButton("아니요") { _, _ ->
 
         }
 
