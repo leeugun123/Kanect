@@ -9,16 +9,11 @@ import android.provider.MediaStore
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
-import org.techtown.kanect.Data.PicAuth
 import org.techtown.kanect.Object.UserKakaoInfo
 import org.techtown.kanect.ViewModel.TakePicViewModel
 import org.techtown.kanect.databinding.ActivityAuthBinding
-import java.io.ByteArrayOutputStream
 
 class AuthActivity : AppCompatActivity() {
 
@@ -78,7 +73,7 @@ class AuthActivity : AppCompatActivity() {
 
         }
 
-        takePicViewModel.uploadSuccess.observe(this) { isUploaded ->
+        takePicViewModel.uploadAuth.observe(this) { isUploaded ->
 
             if (isUploaded) {
                 Toast.makeText(this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show()
@@ -87,6 +82,9 @@ class AuthActivity : AppCompatActivity() {
             }
 
         }
+
+
+
 
 
 
@@ -107,7 +105,7 @@ class AuthActivity : AppCompatActivity() {
                 .into(binding.authPic)
 
             // Firebase Storage에 업로드
-            takePicViewModel.uploadImageToFirebaseStorage(imageBitmap , UserKakaoInfo.userId.toString())
+            takePicViewModel.uploadImageAuth(imageBitmap , UserKakaoInfo.userId.toString())
 
         }
 

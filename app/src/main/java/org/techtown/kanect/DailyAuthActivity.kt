@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -16,6 +17,7 @@ import com.kakao.sdk.user.UserApiClient
 import org.techtown.kanect.Data.DailyAuth
 import org.techtown.kanect.Data.PicAuth
 import org.techtown.kanect.Object.GetTime
+import org.techtown.kanect.ViewModel.TakePicViewModel
 import org.techtown.kanect.databinding.ActivityDailyAuthBinding
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
@@ -28,12 +30,15 @@ class DailyAuthActivity : AppCompatActivity() {
     private val REQUEST_IMAGE_CAPTURE = 2
     private var dailyAuthPic = false
     private lateinit var imageBitmap : Bitmap
+    private lateinit var takePicViewModel : TakePicViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityDailyAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        takePicViewModel = ViewModelProvider(this).get(TakePicViewModel::class.java)
+
 
         binding.takePicBut.setOnClickListener {
 
@@ -63,11 +68,25 @@ class DailyAuthActivity : AppCompatActivity() {
 
             if(dailyAuthPic && binding.authText.text.isNotBlank()){
 
-                uploadImageToFirebaseStorage(imageBitmap , binding.authText.text.toString())
+                takePicViewModel.uploadImageDaily(imageBitmap , binding.authText.text.toString())
 
             }
 
         }
+
+        takePicViewModel.uploadDaily.observe(this) { isUploaded ->
+
+            if (isUploaded) {
+                Toast.makeText(this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show()
+            } else {
+                // 데이터 업로드 실패 처리
+            }
+
+        }
+
+
+
+
 
 
 
@@ -95,73 +114,7 @@ class DailyAuthActivity : AppCompatActivity() {
     }
 
 
-    private fun uploadImageToFirebaseStorage(imageBitmap : Bitmap , authText : String) {
 
-        // 이미지 파일 이름을 현재 시간으로 지정
-        val imageFileName = "imageDailyAuth_${System.currentTimeMillis()}.jpg"
-
-        val storage = FirebaseStorage.getInstance()
-        val storageRef: StorageReference = storage.reference
-        val imageRef: StorageReference = storageRef.child("imagesDailyAuth/$imageFileName")
-
-        // Bitmap을 ByteArray로 변환하여 업로드
-        val baos = ByteArrayOutputStream()
-        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-
-        val imageData: ByteArray = baos.toByteArray()
-        val uploadTask = imageRef.putBytes(imageData)
-
-        uploadTask.addOnCompleteListener { task ->
-
-            if (task.isSuccessful) {
-                // 업로드 성공
-                imageRef.downloadUrl.addOnSuccessListener { uri ->
-
-                    val dailyAuthImageUrl = uri.toString()
-
-                    UserApiClient.instance.me { user, error ->
-
-                        user?.let {
-
-                            val userName = it!!.kakaoAccount!!.profile!!.nickname.toString()
-                            val userImg = it.kakaoAccount!!.profile!!.profileImageUrl.toString()
-
-                            val dailyAuth = DailyAuth(userName,userImg,dailyAuthImageUrl,authText, GetTime.getCurrentDate())
-
-                            val databaseRef = FirebaseDatabase.getInstance().reference
-                            val newDailyAuthRef = databaseRef.child("DailyAuths").push()
-
-                            newDailyAuthRef.setValue(dailyAuth)
-                                .addOnSuccessListener {
-
-                                    Toast.makeText(this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show()
-                                    finish()
-
-
-                                }
-
-                                .addOnFailureListener {
-                                    // 업로드 실패 처리
-                                }
-
-                        }
-
-                    }//파이베이스에 데이터 올리기
-
-
-
-
-
-                }
-
-            }
-            else {
-                // 업로드 실패
-            }
-
-        }
-
-    }
 
 
 
