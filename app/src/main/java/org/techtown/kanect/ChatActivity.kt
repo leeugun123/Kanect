@@ -29,6 +29,7 @@ import org.techtown.kanect.Object.GetTime
 import org.techtown.kanect.Object.UserKakaoInfo
 import org.techtown.kanect.ViewModel.CafeCountViewModel
 import org.techtown.kanect.ViewModel.ChatDataViewModel
+import org.techtown.kanect.ViewModel.UploadCafeNumViewModel
 import org.techtown.kanect.databinding.ActivityChatBinding
 import java.time.LocalDate
 import java.time.LocalTime
@@ -45,7 +46,7 @@ class ChatActivity : AppCompatActivity() {
 
     private lateinit var cafeCountViewModel : CafeCountViewModel
     private lateinit var chatDataViewModel : ChatDataViewModel
-
+    private lateinit var uploadCafeNumViewModel : UploadCafeNumViewModel
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,11 +55,13 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
         cafeCountViewModel = ViewModelProvider(this).get(CafeCountViewModel::class.java)
         chatDataViewModel = ViewModelProvider(this).get(ChatDataViewModel::class.java)
+        uploadCafeNumViewModel = ViewModelProvider(this).get(UploadCafeNumViewModel::class.java)
+
         setContentView(binding.root)
 
         chatInit()
         //UI 업데이트
-        //uploadCafeCount(true)
+        uploadCafeNumViewModel.uploadCafeCount(true)
         // 입장
 
 
@@ -136,53 +139,7 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
-    /*
-    private fun uploadCafeCount(entry : Boolean){
-        // 카페 입장 시 인원 추가
-        chatNumRef.runTransaction(object : Transaction.Handler {
 
-            override fun doTransaction(mutableData : MutableData): Transaction.Result {
-
-                var currentCount = mutableData.getValue(Int::class.java) ?: 0
-
-                if(entry)
-                    currentCount++
-                else{
-                    if(currentCount != 0)
-                        currentCount--;
-                }
-
-                mutableData.value = currentCount
-
-                return Transaction.success(mutableData)
-
-            }
-
-            override fun onComplete(databaseError: DatabaseError?, committed: Boolean, dataSnapshot: DataSnapshot?) {
-
-                if (databaseError == null) {
-
-                    if (committed) {
-                        Log.e("Firebase", "입장 인원 업데이트 성공")
-                    }
-                    else {
-                        Log.e("Firebase", "입장 인원 업데이트 실패")
-                    }
-
-                } else {
-                    Log.e("Firebase", "입장 인원 업데이트 오류: ${databaseError.message}")
-                }
-
-            }
-
-        })
-
-
-
-    }
-
-
-*/
 
     private fun getOut(){
 
@@ -193,7 +150,7 @@ class ChatActivity : AppCompatActivity() {
         // "예" 버튼 설정 및 클릭 리스너 추가
         alertDialogBuilder.setPositiveButton("예") { _, _ ->
 
-            //uploadCafeCount(false)
+            uploadCafeNumViewModel.uploadCafeCount(false)
             finish()
 
         }
