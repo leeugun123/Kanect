@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import org.techtown.kanect.Data.DailyAuth
 import org.techtown.kanect.databinding.DailyAuthBinding
 
-class DailyAuthAdapter (private val authList : MutableList<DailyAuth>) : RecyclerView.Adapter<DailyAuthAdapter.ViewHolder>() {
+class DailyAuthAdapter(private val authList: List<DailyAuth>) : RecyclerView.Adapter<DailyAuthAdapter.ViewHolder>() {
 
 
     inner class ViewHolder(val binding : DailyAuthBinding) : RecyclerView.ViewHolder(binding.root),
