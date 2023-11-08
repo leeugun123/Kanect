@@ -14,6 +14,7 @@ class UploadCafeNumViewModel : ViewModel() {
     private val chatNumRef = Firebase.database.getReference("chatNum")
 
     fun uploadCafeCount(entry: Boolean) {
+
         chatNumRef.runTransaction(object : Transaction.Handler {
 
             override fun doTransaction(mutableData: MutableData): Transaction.Result {

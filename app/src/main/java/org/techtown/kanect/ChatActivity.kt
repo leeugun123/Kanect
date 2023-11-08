@@ -29,6 +29,7 @@ import org.techtown.kanect.Object.GetTime
 import org.techtown.kanect.Object.UserKakaoInfo
 import org.techtown.kanect.ViewModel.CafeCountViewModel
 import org.techtown.kanect.ViewModel.ChatDataViewModel
+import org.techtown.kanect.ViewModel.ChatSendViewModel
 import org.techtown.kanect.ViewModel.UploadCafeNumViewModel
 import org.techtown.kanect.databinding.ActivityChatBinding
 import java.time.LocalDate
@@ -43,10 +44,10 @@ class ChatActivity : AppCompatActivity() {
     // Firebase Realtime Database
     private lateinit var cafeName : String
 
-
     private lateinit var cafeCountViewModel : CafeCountViewModel
     private lateinit var chatDataViewModel : ChatDataViewModel
     private lateinit var uploadCafeNumViewModel : UploadCafeNumViewModel
+    private lateinit var chatSendViewModel : ChatSendViewModel
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +57,7 @@ class ChatActivity : AppCompatActivity() {
         cafeCountViewModel = ViewModelProvider(this).get(CafeCountViewModel::class.java)
         chatDataViewModel = ViewModelProvider(this).get(ChatDataViewModel::class.java)
         uploadCafeNumViewModel = ViewModelProvider(this).get(UploadCafeNumViewModel::class.java)
+        chatSendViewModel = ViewModelProvider(this).get(ChatSendViewModel::class.java)
 
         setContentView(binding.root)
 
@@ -79,7 +81,6 @@ class ChatActivity : AppCompatActivity() {
 
         binding.sendButton.setOnClickListener {
 
-            /*
             val messageText = binding.messageInputEditText.text.toString()
 
             if(messageText.isNotBlank()){
@@ -94,13 +95,11 @@ class ChatActivity : AppCompatActivity() {
                     false
                 )
 
-                chatRef.push().setValue(message)
+                chatSendViewModel.sendChatMessage(message,cafeName)
                 binding.messageInputEditText.text.clear()
 
 
             }
-
-            */
 
         }//전송 버튼
 

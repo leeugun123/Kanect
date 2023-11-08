@@ -26,8 +26,6 @@ class CafeCountViewModel : ViewModel() {
     val cafeChatNum: LiveData<Int> get() = _cafeChatNum
 
 
-
-
     fun getCafeListData(cafeList: List<CafeIntel>) {
 
         coroutineScope.launch {
