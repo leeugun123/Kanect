@@ -54,21 +54,19 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityChatBinding.inflate(layoutInflater)
-        cafeCountViewModel = ViewModelProvider(this).get(CafeCountViewModel::class.java)
-        chatDataViewModel = ViewModelProvider(this).get(ChatDataViewModel::class.java)
-        uploadCafeNumViewModel = ViewModelProvider(this).get(UploadCafeNumViewModel::class.java)
-        chatSendViewModel = ViewModelProvider(this).get(ChatSendViewModel::class.java)
-
         setContentView(binding.root)
 
+        viewModelInit()
         chatInit()
-        //UI 업데이트
-        uploadCafeNumViewModel.uploadCafeCount(true)
-        // 입장
 
+       uploadCafeNumViewModel.uploadCafeCount(true , cafeName)
+        // 여기서 문제가 생김
+
+
+
+        chatDataViewModel.getChatMessage(cafeName)
 
         cafeCountViewModel.getCafeNum(cafeName)
-        chatDataViewModel.getChatMessage(cafeName)
 
         cafeCountViewModel.cafeChatNum.observe(this) { cafeChatNum ->
             binding.chatNum.text = cafeChatNum.toString() + "명"
@@ -78,26 +76,22 @@ class ChatActivity : AppCompatActivity() {
             chatUpdate(chatList)
         }
 
-
         binding.sendButton.setOnClickListener {
 
             val messageText = binding.messageInputEditText.text.toString()
 
             if(messageText.isNotBlank()){
 
-                val message = ChatMessage(
+                chatSendViewModel.sendChatMessage(ChatMessage(
                     UserKakaoInfo.userId,
                     UserKakaoInfo.userImg,
                     UserKakaoInfo.userName,
                     messageText,
                     GetTime.getCurrentTimeAsString(),
                     GetTime.getCurrentDateAsInt(),
-                    false
-                )
+                    false),cafeName)
 
-                chatSendViewModel.sendChatMessage(message,cafeName)
                 binding.messageInputEditText.text.clear()
-
 
             }
 
@@ -105,6 +99,13 @@ class ChatActivity : AppCompatActivity() {
 
 
 
+    }
+
+    private fun viewModelInit() {
+        cafeCountViewModel = ViewModelProvider(this).get(CafeCountViewModel::class.java)
+        chatDataViewModel = ViewModelProvider(this).get(ChatDataViewModel::class.java)
+        uploadCafeNumViewModel = ViewModelProvider(this).get(UploadCafeNumViewModel::class.java)
+        chatSendViewModel = ViewModelProvider(this).get(ChatSendViewModel::class.java)
     }
 
     private fun chatInit() {
@@ -149,7 +150,7 @@ class ChatActivity : AppCompatActivity() {
         // "예" 버튼 설정 및 클릭 리스너 추가
         alertDialogBuilder.setPositiveButton("예") { _, _ ->
 
-            uploadCafeNumViewModel.uploadCafeCount(false)
+            uploadCafeNumViewModel.uploadCafeCount(false,cafeName)
             finish()
 
         }

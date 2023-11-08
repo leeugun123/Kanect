@@ -1,5 +1,6 @@
 package org.techtown.kanect.ViewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -64,6 +65,7 @@ class CafeCountViewModel : ViewModel() {
     fun getCafeNum(cafeName : String){
 
         coroutineScope.launch {
+            Log.e("TAG","getCafeNum 호출")
             _cafeChatNum.value = GetCafeNum.getCafeNum(cafeName)
         }
 
