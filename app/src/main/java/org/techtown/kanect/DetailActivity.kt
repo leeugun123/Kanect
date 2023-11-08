@@ -73,6 +73,8 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
+
+
     private fun cafeDetailInit(cafeInfo : CafeIntel){
 
         Glide.with(this)

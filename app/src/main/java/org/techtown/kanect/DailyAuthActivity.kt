@@ -40,37 +40,12 @@ class DailyAuthActivity : AppCompatActivity() {
         takePicViewModel = ViewModelProvider(this).get(TakePicViewModel::class.java)
 
 
-
-        binding.takePicBut.setOnClickListener {
-
-            TedPermission.create()
-                .setPermissionListener(object : PermissionListener {
-
-                    override fun onPermissionGranted() {
-
-                        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                        startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE)
-
-                    }
-
-                    override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
-
-                    }
-
-                })
-                .setDeniedMessage("카메라 권한이 필요합니다.\n[설정]에서 권한을 허용해주세요.")
-                .setPermissions(android.Manifest.permission.CAMERA)
-                .check()
-
-
-        }
+        binding.takePicBut.setOnClickListener { usingCamera() }
 
         binding.authBut.setOnClickListener {
 
             if(dailyAuthPic && binding.authText.text.isNotBlank()){
-
                 takePicViewModel.uploadImageDaily(imageBitmap , binding.authText.text.toString())
-
             }
 
         }
@@ -80,17 +55,33 @@ class DailyAuthActivity : AppCompatActivity() {
             if (isUploaded) {
                 Toast.makeText(this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show()
                 finish()
-            } else {
-                // 데이터 업로드 실패 처리
             }
 
         }
 
 
+    }
 
+    private fun usingCamera() {
 
+        TedPermission.create()
+            .setPermissionListener(object : PermissionListener {
 
+                override fun onPermissionGranted() {
 
+                    val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE)
+
+                }
+
+                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+
+                }
+
+            })
+            .setDeniedMessage("카메라 권한이 필요합니다.\n[설정]에서 권한을 허용해주세요.")
+            .setPermissions(android.Manifest.permission.CAMERA)
+            .check()
 
     }
 
@@ -111,16 +102,6 @@ class DailyAuthActivity : AppCompatActivity() {
 
         }
 
-
-
     }
-
-
-
-
-
-
-
-
 
 }
