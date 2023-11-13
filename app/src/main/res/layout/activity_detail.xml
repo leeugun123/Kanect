@@ -51,16 +51,18 @@
 
                 <ImageButton
                     android:id="@+id/reviewBut"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="100dp"
+                    android:layout_weight="1"
                     android:background="@color/white"
                     android:src="@drawable/baseline_border_color_24" />
 
 
                 <ImageButton
                     android:id="@+id/chatbut"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="100dp"
+                    android:layout_weight="1"
                     android:background="@color/white"
                     android:src="@drawable/baseline_chat_24"
                     />
@@ -79,7 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="스타벅스(공릉점)"
-                    android:textSize="35sp"
+                    android:textSize="30sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     />
