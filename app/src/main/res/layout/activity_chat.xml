@@ -41,8 +41,7 @@
             android:layout_height="wrap_content"
             android:text="참여 인원 : "
             android:textSize="20sp"
-            android:layout_gravity="right|center"
-            android:gravity="right"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/white"
             />
 
@@ -53,8 +52,7 @@
             android:layout_marginRight="10dp"
             android:text="23명"
             android:textSize="20sp"
-            android:layout_gravity="right|center"
-            android:gravity="right"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/white"
             />
 
