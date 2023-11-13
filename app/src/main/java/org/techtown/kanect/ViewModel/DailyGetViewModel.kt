@@ -21,7 +21,7 @@ class DailyGetViewModel : ViewModel(){
 
         val authRef = Firebase.database.reference.child("DailyAuths")
 
-        authRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        authRef.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
