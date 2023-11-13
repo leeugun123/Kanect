@@ -111,6 +111,7 @@ class DailyAuthActivity : AppCompatActivity() {
 
         binding.authImageView.visibility = View.GONE
         binding.takePicBut.visibility = View.GONE
+        binding.authText.visibility = View.GONE
 
         // Disable user interaction while loading
         window.setFlags(
