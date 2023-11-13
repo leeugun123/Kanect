@@ -7,66 +7,83 @@
     android:orientation="vertical"
     tools:context=".DailyAuthActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_marginTop="50dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp">
+        android:layout_height="70dp"
+        android:background="#282828">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="인증 기록"
+            android:layout_gravity="center_vertical"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp">
 
 
         <ImageView
             android:id="@+id/auth_imageView"
-            android:layout_width="400dp"
-            android:layout_height="400dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints"
-            android:src="@drawable/auth_pic"
-            tools:layout_editor_absoluteX="5dp" >
-        </ImageView>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:visibility="gone" />
-
-
-        </RelativeLayout>
-
-
-
-        <Button
-            android:id="@+id/takePic_but"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/rounded_corners_background"
-            android:text="사진 찍기"
-            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_centerInParent="true"
+            android:src="@drawable/auth_pic"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.984"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/auth_imageView"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toStartOf="parent">
+
+        </ImageView>
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/takePic_but"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="28dp"
+            android:background="@drawable/rounded_corners_background"
+            android:src="@drawable/baseline_photo_camera_24"
+            android:text="사진 찍기"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/auth_imageView" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+
+
     <EditText
         android:id="@+id/auth_Text"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:hint="오늘의 인증을 기록해보세요."
         android:gravity="top"
+        android:paddingLeft="5dp"
         />
 
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <Button
         android:id="@+id/auth_but"
@@ -75,11 +92,13 @@
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/rounded_corners_background"
         android:text="인증 기록"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:textStyle="bold"
+        android:layout_gravity="bottom"
         />
 
 

@@ -98,7 +98,7 @@ class DailyAuthActivity : AppCompatActivity() {
 
             Glide.with(this)
                 .load(imageBitmap)
-                .centerCrop()
+                .fitCenter()
                 .into(binding.authImageView)
 
         }
@@ -108,6 +108,9 @@ class DailyAuthActivity : AppCompatActivity() {
     private fun showLoadingState() {
         // Show the ProgressBar
         binding.progressBar.visibility = View.VISIBLE
+
+        binding.authImageView.visibility = View.GONE
+        binding.takePicBut.visibility = View.GONE
 
         // Disable user interaction while loading
         window.setFlags(
