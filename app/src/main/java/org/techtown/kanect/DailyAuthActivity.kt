@@ -1,10 +1,13 @@
 package org.techtown.kanect
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -45,7 +48,13 @@ class DailyAuthActivity : AppCompatActivity() {
         binding.authBut.setOnClickListener {
 
             if(dailyAuthPic && binding.authText.text.isNotBlank()){
+
+                showLoadingState()
                 takePicViewModel.uploadImageDaily(imageBitmap , binding.authText.text.toString())
+
+
+            }else{
+                Toast.makeText(this, "사진과 글을 올려주세요.", Toast.LENGTH_SHORT).show()
             }
 
         }
@@ -53,6 +62,7 @@ class DailyAuthActivity : AppCompatActivity() {
         takePicViewModel.uploadDaily.observe(this) { isUploaded ->
 
             if (isUploaded) {
+                hideLoadingState()
                 Toast.makeText(this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show()
                 finish()
             }
@@ -66,18 +76,11 @@ class DailyAuthActivity : AppCompatActivity() {
 
         TedPermission.create()
             .setPermissionListener(object : PermissionListener {
-
                 override fun onPermissionGranted() {
-
                     val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                     startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE)
-
                 }
-
-                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
-
-                }
-
+                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {}
             })
             .setDeniedMessage("카메라 권한이 필요합니다.\n[설정]에서 권한을 허용해주세요.")
             .setPermissions(android.Manifest.permission.CAMERA)
@@ -85,14 +88,12 @@ class DailyAuthActivity : AppCompatActivity() {
 
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
             dailyAuthPic = true;
-
             imageBitmap = data?.extras?.get("data") as Bitmap
 
             Glide.with(this)
@@ -103,5 +104,25 @@ class DailyAuthActivity : AppCompatActivity() {
         }
 
     }
+
+    private fun showLoadingState() {
+        // Show the ProgressBar
+        binding.progressBar.visibility = View.VISIBLE
+
+        // Disable user interaction while loading
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+    }
+
+    private fun hideLoadingState() {
+        // Hide the ProgressBar
+        binding.progressBar.visibility = View.GONE
+
+        // Enable user interaction after loading
+        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    }
+
 
 }

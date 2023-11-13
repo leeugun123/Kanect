@@ -21,7 +21,24 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints"
             android:src="@drawable/auth_pic"
-            tools:layout_editor_absoluteX="5dp" />
+            tools:layout_editor_absoluteX="5dp" >
+        </ImageView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+
+
+        </RelativeLayout>
+
+
 
         <Button
             android:id="@+id/takePic_but"
@@ -64,6 +81,9 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         />
+
+
+
 
 
 </LinearLayout>

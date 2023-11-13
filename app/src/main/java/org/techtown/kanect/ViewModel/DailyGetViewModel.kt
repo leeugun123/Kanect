@@ -14,10 +14,8 @@ import org.techtown.kanect.Data.DailyAuth
 class DailyGetViewModel : ViewModel(){
 
     private val _dailyGetLiveData = MutableLiveData<List<DailyAuth>>()
-
     val dailyGetLiveData : LiveData<List<DailyAuth>>
         get() = _dailyGetLiveData
-
 
     fun getDailyGetData(){
 

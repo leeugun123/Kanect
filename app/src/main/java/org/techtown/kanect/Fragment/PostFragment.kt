@@ -29,9 +29,8 @@ class PostFragment : Fragment() {
 
         binding = FragmentPostBinding.inflate(inflater,container,false)
 
-        dailyAuthRecyclerView= binding.authRecyclerView
+        dailyAuthRecyclerView = binding.authRecyclerView
         dailyAuthRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-
 
         binding.authBut.setOnClickListener {
 
@@ -39,7 +38,6 @@ class PostFragment : Fragment() {
             startActivity(intent)
 
         }
-
 
         return binding.root
 
@@ -56,8 +54,6 @@ class PostFragment : Fragment() {
         }
 
         dailyGetViewModel.getDailyGetData()
-
-
 
     }
 

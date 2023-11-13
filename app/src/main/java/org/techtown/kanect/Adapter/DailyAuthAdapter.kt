@@ -14,7 +14,6 @@ class DailyAuthAdapter(private val authList: List<DailyAuth>) : RecyclerView.Ada
     inner class ViewHolder(val binding : DailyAuthBinding) : RecyclerView.ViewHolder(binding.root),
             View.OnClickListener{
 
-
                 init{
                     itemView.setOnClickListener(this)
                 }
