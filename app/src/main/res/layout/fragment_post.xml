@@ -36,7 +36,7 @@
         android:id="@+id/auth_but"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:background="#2196F3"
@@ -44,7 +44,6 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:textSize="15sp"
-        android:layout_gravity="bottom"
         />
 
 
