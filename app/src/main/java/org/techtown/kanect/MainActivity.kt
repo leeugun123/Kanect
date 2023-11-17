@@ -19,6 +19,12 @@ class MainActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        bottomNaviInit()
+
+    }
+
+    private fun bottomNaviInit() {
+
         supportFragmentManager.beginTransaction().add(R.id.fragment_container,ListFragment()).commit()
 
         val bottomNavigationView = findViewById<View>(R.id.bottom_navigation) as BottomNavigationView
@@ -35,21 +41,22 @@ class MainActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
 
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
                     ListFragment()).commitAllowingStateLoss()
+
                 return true;
             }
             R.id.navigation_talk -> {
 
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-                    TalkFragment()
-                ).commitAllowingStateLoss()
+                    TalkFragment()).commitAllowingStateLoss()
+
                 return true;
 
             }
             R.id.navigation_post -> {
 
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-                    PostFragment()
-                ).commitAllowingStateLoss()
+                    PostFragment()).commitAllowingStateLoss()
+
                 return true;
 
             }

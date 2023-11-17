@@ -22,7 +22,6 @@ class TakePicViewModel : ViewModel() {
         get() = _uploadAuth
 
 
-
     private val _uploadDaily = MutableLiveData<Boolean>()
 
     val uploadDaily : LiveData<Boolean>
@@ -31,10 +30,7 @@ class TakePicViewModel : ViewModel() {
     fun uploadImageAuth(imageBitmap: Bitmap, userId: String) {
 
         val imageFileName = "image_${System.currentTimeMillis()}.jpg"
-        val storage = FirebaseStorage.getInstance()
-        val storageRef: StorageReference = storage.reference
-        val imageRef: StorageReference = storageRef.child("images/$imageFileName")
-
+        val imageRef: StorageReference = FirebaseStorage.getInstance().reference.child("images/$imageFileName")
         val baos = ByteArrayOutputStream()
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val imageData: ByteArray = baos.toByteArray()
@@ -47,11 +43,8 @@ class TakePicViewModel : ViewModel() {
 
                 imageRef.downloadUrl.addOnSuccessListener { uri ->
 
-                    val imageUrl = uri.toString()
-                    val picAuth = PicAuth(userId, imageUrl)
-                    val databaseRef = FirebaseDatabase.getInstance().reference
-                    val newPicAuthRef = databaseRef.child("picAuths").child(userId)
-
+                    val picAuth = PicAuth(userId, uri.toString())
+                    val newPicAuthRef = FirebaseDatabase.getInstance().reference.child("picAuths").child(userId)
                     newPicAuthRef.setValue(picAuth).addOnSuccessListener {
                         _uploadAuth.value = true
                     }.addOnFailureListener {
