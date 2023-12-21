@@ -13,7 +13,6 @@ import org.techtown.kanect.Data.ChatMessage
 class ChatDataViewModel : ViewModel() {
 
     private val _chatMessageLiveData = MutableLiveData<MutableList<ChatMessage>>()
-
     val chatMessageLiveData : LiveData<MutableList<ChatMessage>>
         get() = _chatMessageLiveData
 

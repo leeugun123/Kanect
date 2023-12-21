@@ -4,6 +4,9 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     compileSdk 33
 
@@ -15,6 +18,11 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "kakao_api_key", properties['KAKAO_API_KEY']
+        buildConfigField "String", "kakao_api_key_manifest", properties['KAKAO_API_KEY_MANIFEST']
+
+
     }
 
     buildTypes {

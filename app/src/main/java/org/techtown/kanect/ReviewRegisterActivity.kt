@@ -63,9 +63,7 @@ class ReviewRegisterActivity : AppCompatActivity() {
                 finish()
 
             } else {
-
                 Toast.makeText(this, "후기 작성 실패. 네트워크 오류", Toast.LENGTH_SHORT).show()
-
             }
 
         }

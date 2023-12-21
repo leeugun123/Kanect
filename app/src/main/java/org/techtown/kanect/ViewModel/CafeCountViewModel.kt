@@ -30,17 +30,13 @@ class CafeCountViewModel : ViewModel() {
     fun getCafeListData(cafeList: List<CafeIntel>) {
 
         coroutineScope.launch {
-
             val updatedList = cafeList.map { cafe ->
 
                 val entryCount = GetCafeNum.getCafeNum(cafe.cafeName)
                 cafe.copy(cur_seat = entryCount)
 
-
             }
-
             _cafeList.value = updatedList
-
         }
 
     }

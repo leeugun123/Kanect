@@ -10,7 +10,6 @@ class KakaoViewModel : ViewModel() {
     private val _userId = MutableLiveData<Long>()
     val userId : LiveData<Long> get() = _userId
 
-
     private val _userName = MutableLiveData<String>()
     val userName: LiveData<String> get() = _userName
 

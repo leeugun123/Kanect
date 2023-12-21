@@ -30,24 +30,15 @@ class DailyGetViewModel : ViewModel(){
                 for(childSnapshot in snapshot.children.reversed()){
 
                     val dailyAuth = childSnapshot.getValue(DailyAuth::class.java)
-
                     dailyAuth?.let {
                         dailyAuthList.add(it)
                     }
-
                 }
-
                 _dailyGetLiveData.value = dailyAuthList
-
             }
 
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-
+            override fun onCancelled(error: DatabaseError) {}
         })
-
 
     }
 

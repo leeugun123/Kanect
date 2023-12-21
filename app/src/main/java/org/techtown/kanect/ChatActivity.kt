@@ -60,21 +60,21 @@ class ChatActivity : AppCompatActivity() {
         chatInit()
 
        uploadCafeNumViewModel.uploadCafeCount(true , cafeName)
-        // 여기서 문제가 생김
-
-
-
-        chatDataViewModel.getChatMessage(cafeName)
+        // 카페 인원 추가 요청
 
         cafeCountViewModel.getCafeNum(cafeName)
 
         cafeCountViewModel.cafeChatNum.observe(this) { cafeChatNum ->
             binding.chatNum.text = cafeChatNum.toString() + "명"
         }
+        //카페 인원 정보 업데이트
+
+        chatDataViewModel.getChatMessage(cafeName)
 
         chatDataViewModel.chatMessageLiveData.observe(this){ chatList->
             chatUpdate(chatList)
         }
+        //채팅 정보 가져오기
 
         binding.sendButton.setOnClickListener {
 
@@ -95,7 +95,7 @@ class ChatActivity : AppCompatActivity() {
 
             }
 
-        }//전송 버튼
+        }//채팅 전송 버튼
 
 
 

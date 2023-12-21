@@ -24,7 +24,6 @@ class ReviewRegisterViewModel : ViewModel() {
                 _registerStatus.value = false
             }
 
-
     }
 
 
