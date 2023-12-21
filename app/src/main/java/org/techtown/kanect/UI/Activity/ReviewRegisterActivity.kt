@@ -1,4 +1,4 @@
-package org.techtown.kanect
+package org.techtown.kanect.UI.Activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import org.techtown.kanect.Data.UserIntel
 import org.techtown.kanect.Object.GetTime
 import org.techtown.kanect.Object.UserKakaoInfo
 import org.techtown.kanect.ViewModel.ReviewRegisterViewModel

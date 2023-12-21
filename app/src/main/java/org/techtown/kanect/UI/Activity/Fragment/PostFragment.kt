@@ -1,4 +1,4 @@
-package org.techtown.kanect.Fragment
+package org.techtown.kanect.UI.Activity.Fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.techtown.kanect.Adapter.DailyAuthAdapter
-import org.techtown.kanect.DailyAuthActivity
+import org.techtown.kanect.UI.Activity.DailyAuthActivity
 import org.techtown.kanect.ViewModel.DailyGetViewModel
 import org.techtown.kanect.databinding.FragmentPostBinding
 

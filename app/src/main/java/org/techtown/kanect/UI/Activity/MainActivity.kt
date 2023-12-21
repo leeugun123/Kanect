@@ -1,13 +1,14 @@
-package org.techtown.kanect
+package org.techtown.kanect.UI.Activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import org.techtown.kanect.Fragment.ListFragment
-import org.techtown.kanect.Fragment.PostFragment
-import org.techtown.kanect.Fragment.TalkFragment
+import org.techtown.kanect.UI.Activity.Fragment.ListFragment
+import org.techtown.kanect.UI.Activity.Fragment.PostFragment
+import org.techtown.kanect.UI.Activity.Fragment.TalkFragment
+import org.techtown.kanect.R
 import org.techtown.kanect.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItemSelectedListener{
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
 
     private fun bottomNaviInit() {
 
-        supportFragmentManager.beginTransaction().add(R.id.fragment_container,ListFragment()).commit()
+        supportFragmentManager.beginTransaction().add(R.id.fragment_container, ListFragment()).commit()
 
         val bottomNavigationView = findViewById<View>(R.id.bottom_navigation) as BottomNavigationView
 
@@ -39,23 +40,29 @@ class MainActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
 
             R.id.navigation_list -> {
 
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-                    ListFragment()).commitAllowingStateLoss()
+                supportFragmentManager.beginTransaction().replace(
+                    R.id.fragment_container,
+                    ListFragment()
+                ).commitAllowingStateLoss()
 
                 return true;
             }
             R.id.navigation_talk -> {
 
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-                    TalkFragment()).commitAllowingStateLoss()
+                supportFragmentManager.beginTransaction().replace(
+                    R.id.fragment_container,
+                    TalkFragment()
+                ).commitAllowingStateLoss()
 
                 return true;
 
             }
             R.id.navigation_post -> {
 
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-                    PostFragment()).commitAllowingStateLoss()
+                supportFragmentManager.beginTransaction().replace(
+                    R.id.fragment_container,
+                    PostFragment()
+                ).commitAllowingStateLoss()
 
                 return true;
 

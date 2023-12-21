@@ -24,22 +24,22 @@
         android:theme="@style/Theme.Kanect"
         tools:targetApi="31">
         <activity
-            android:name=".DailyAuthActivity"
+            android:name=".UI.Activity.DailyAuthActivity"
             android:exported="false" />
         <activity
-            android:name=".ChatActivity"
+            android:name=".UI.Activity.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".ReviewRegisterActivity"
+            android:name=".UI.Activity.ReviewRegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".DetailActivity"
+            android:name=".UI.Activity.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".AuthActivity"
+            android:name=".UI.Activity.AuthActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".UI.Activity.MainActivity"
             android:exported="false" /> <!-- 카카오 로그인을 위한 Redirect URI 설정 -->
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
@@ -56,10 +56,10 @@
 
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".UI.Activity.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".UI.Activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

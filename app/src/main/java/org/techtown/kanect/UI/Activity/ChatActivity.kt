@@ -1,30 +1,16 @@
-package org.techtown.kanect
+package org.techtown.kanect.UI.Activity
 
 import android.app.AlertDialog
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.MutableData
-import com.google.firebase.database.Transaction
-import com.google.firebase.database.ValueEventListener
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import org.techtown.kanect.Adapter.CafeListAdapter
 import org.techtown.kanect.Adapter.ChatAdapter
 import org.techtown.kanect.Data.ChatMessage
-import org.techtown.kanect.Object.CafeInit
-import org.techtown.kanect.Object.GetCafeNum
 import org.techtown.kanect.Object.GetTime
 import org.techtown.kanect.Object.UserKakaoInfo
 import org.techtown.kanect.ViewModel.CafeCountViewModel
@@ -32,9 +18,6 @@ import org.techtown.kanect.ViewModel.ChatDataViewModel
 import org.techtown.kanect.ViewModel.ChatSendViewModel
 import org.techtown.kanect.ViewModel.UploadCafeNumViewModel
 import org.techtown.kanect.databinding.ActivityChatBinding
-import java.time.LocalDate
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 
 class ChatActivity : AppCompatActivity() {
 

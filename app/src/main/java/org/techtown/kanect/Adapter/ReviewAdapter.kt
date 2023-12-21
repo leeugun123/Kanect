@@ -1,13 +1,11 @@
 package org.techtown.kanect.Adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.techtown.kanect.Data.UserIntel
-import org.techtown.kanect.DetailActivity
 import org.techtown.kanect.databinding.ReviewListLayoutBinding
 
 class ReviewAdapter(private val reviewList : List<UserIntel>) : RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {

@@ -1,6 +1,5 @@
-package org.techtown.kanect
+package org.techtown.kanect.UI.Activity
 
-import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
@@ -11,21 +10,10 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
-import com.kakao.sdk.user.UserApiClient
-import org.techtown.kanect.Data.DailyAuth
-import org.techtown.kanect.Data.PicAuth
-import org.techtown.kanect.Object.GetTime
 import org.techtown.kanect.ViewModel.TakePicViewModel
 import org.techtown.kanect.databinding.ActivityDailyAuthBinding
-import java.io.ByteArrayOutputStream
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 class DailyAuthActivity : AppCompatActivity() {
 
